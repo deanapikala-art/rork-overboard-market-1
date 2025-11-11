@@ -7,7 +7,7 @@ return {
       'module-resolver',
       {
         alias: {
-          '@': './app',
+          '@': './',
         },
         extensions: ['.js', '.ts', '.tsx', '.jsx'],
       },
