@@ -7,14 +7,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Location from 'expo-location';
 
-import Colors from '../../constants/colors';
-import { vendors, Vendor } from '../../mocks/vendors';
-import { useFavorites } from '../contexts/FavoritesContext';
-import { useCustomerAuth } from '../contexts/CustomerAuthContext';
-import { useVendorLive } from '../contexts/VendorLiveContext';
-import { haversineDistance, Coordinates } from '../utils/geolocation';
-import { SERVICE_CATEGORIES } from '../../constants/serviceCategories';
-import HamburgerMenu from '../components/HamburgerMenu';
+import Colors from '@/constants/colors';
+import { vendors, Vendor } from '@/mocks/vendors';
+import { useFavorites } from '@/app/contexts/FavoritesContext';
+import { useCustomerAuth } from '@/app/contexts/CustomerAuthContext';
+import { useVendorLive } from '@/app/contexts/VendorLiveContext';
+import { haversineDistance, Coordinates } from '@/app/utils/geolocation';
+import { SERVICE_CATEGORIES } from '@/constants/serviceCategories';
+import HamburgerMenu from '@/app/components/HamburgerMenu';
 
 interface VendorWithDistance extends Vendor {
   distance?: number;

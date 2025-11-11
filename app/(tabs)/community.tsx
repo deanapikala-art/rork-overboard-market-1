@@ -13,11 +13,11 @@ import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import Colors from '../../constants/colors';
-import { getFeaturedSpotlights } from '../../mocks/vendorSpotlights';
-import { getPinnedPosts } from '../../mocks/communityBulletin';
-import { shoutouts } from '../../mocks/shoutouts';
-import HamburgerMenu from '../components/HamburgerMenu';
+import Colors from '@/constants/colors';
+import { getFeaturedSpotlights } from '@/mocks/vendorSpotlights';
+import { getPinnedPosts } from '@/mocks/communityBulletin';
+import { shoutouts } from '@/mocks/shoutouts';
+import HamburgerMenu from '@/app/components/HamburgerMenu';
 
 const { width } = Dimensions.get('window');
 
