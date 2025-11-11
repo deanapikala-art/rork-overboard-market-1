@@ -1,5 +1,7 @@
-module.exports = {
-  presets: ['@babel/preset-env'],
+module.exports = function (api) {
+api.cache(true);
+return {
+  presets: ['babel-preset-expo'],
   plugins: [
     [
       'module-resolver',
@@ -7,8 +9,9 @@ module.exports = {
         alias: {
           '@': './app',
         },
-        extensions: ['.js', '.ts', '.tsx'],
+        extensions: ['.js', '.ts', '.tsx', '.jsx'],
       },
     ],
   ],
+};
 };
