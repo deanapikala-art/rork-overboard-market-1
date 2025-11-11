@@ -7,15 +7,15 @@ import {
   Platform,
 } from 'react-native';
 import { AlertCircle, X } from 'lucide-react-native';
-import { usePolicyAcknowledgment, PolicyType } from '../contexts/PolicyAcknowledgmentContext';
-import Colors from '../../constants/colors';
+import { usePolicyAcknowledgment, PolicyType } from '@/contexts/PolicyAcknowledgmentContext';
+import Colors from '@/constants/colors';
 import { 
   getPolicyIcon, 
   getPolicyTitle, 
   getPolicyBannerTitle, 
   getPolicyBannerMessage, 
   getPolicyCTALabel 
-} from '../../constants/policyTemplates';
+} from '@/constants/policyTemplates';
 import { router } from 'expo-router';
 
 interface PolicyBannerProps {

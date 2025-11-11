@@ -1,8 +1,8 @@
-import { supabase } from '../../lib/supabase';
+import { supabase } from '@/lib/supabase';
 import createContextHook from '@nkzw/create-context-hook';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { RealtimeChannel } from '@supabase/supabase-js';
-import { PolicyType } from '../../constants/policyTemplates';
+import { PolicyType } from '@/constants/policyTemplates';
 
 export type { PolicyType };
 

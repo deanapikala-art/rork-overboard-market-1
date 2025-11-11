@@ -11,10 +11,10 @@ import {
   Switch,
 } from 'react-native';
 import { Save, AlertCircle, FileText, Eye } from 'lucide-react-native';
-import { PolicyType } from '../contexts/PolicyAcknowledgmentContext';
-import { supabase } from '../../lib/supabase';
-import Colors from '../../constants/colors';
-import { getPolicyIcon, getPolicyTitle, getPolicyBannerMessage } from '../../constants/policyTemplates';
+import { PolicyType } from '@/contexts/PolicyAcknowledgmentContext';
+import { supabase } from '@/lib/supabase';
+import Colors from '@/constants/colors';
+import { getPolicyIcon, getPolicyTitle, getPolicyBannerMessage } from '@/constants/policyTemplates';
 
 interface AdminPolicyEditorProps {
   policyType: PolicyType;

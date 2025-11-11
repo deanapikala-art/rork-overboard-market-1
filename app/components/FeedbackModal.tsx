@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Modal, TextInput, TouchableOpacity, Platform, KeyboardAvoidingView, ScrollView, Alert } from 'react-native';
 import { X, Send } from 'lucide-react-native';
-import { useFeedback } from '../contexts/FeedbackContext';
-import { trpc } from '../../lib/trpc';
-import Colors from '../../constants/colors';
+import { useFeedback } from '@/contexts/FeedbackContext';
+import { trpc } from '@/lib/trpc';
+import Colors from '@/constants/colors';
 
 interface FeedbackModalProps {
   currentPage: string;

@@ -10,7 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import { X, ShieldCheck } from 'lucide-react-native';
-import Colors from '../../constants/colors';
+import Colors from '@/constants/colors';
 
 interface VerifyPickupCodeModalProps {
   visible: boolean;
