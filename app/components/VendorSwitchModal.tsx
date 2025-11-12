@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Modal, TouchableOpacity, Pressable } from 'react-native';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 
 interface VendorSwitchModalProps {
   visible: boolean;

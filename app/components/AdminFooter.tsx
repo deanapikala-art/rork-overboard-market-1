@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 
 export default function AdminFooter() {
   const handleAdminLogin = () => {

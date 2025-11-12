@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { AlertTriangle, CheckCircle, XCircle, Flag, Shield, TrendingDown, TrendingUp, Search } from 'lucide-react-native';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { useSafetyFilters, FlaggedMessage } from '@/app/contexts/SafetyFiltersContext';
 import { getSeverityColor, getSeverityLabel } from '@/app/utils/safetyFilters';
 

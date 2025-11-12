@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import Colors from '@/constants/colors';
-import { ALL_SERVICE_CATEGORIES } from '@/constants/serviceCategories';
+import Colors from '@/app/constants/colors';
+import { ALL_SERVICE_CATEGORIES } from '@/app/constants/serviceCategories';
 
 export type VendorFilterType = 'all' | 'product' | 'service';
 

@@ -21,7 +21,7 @@ import {
   BarChart3,
   RefreshCw,
 } from 'lucide-react-native';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { useAdminStats } from '@/app/contexts/AdminStatsContext';
 
 const { width } = Dimensions.get('window');

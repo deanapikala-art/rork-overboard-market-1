@@ -11,7 +11,7 @@ import {
   Linking,
 } from 'react-native';
 import { X, Video, AlertCircle, ExternalLink } from 'lucide-react-native';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { LivePlatform } from '@/app/contexts/VendorLiveContext';
 
 type GoLiveModalProps = {

@@ -24,7 +24,7 @@ import {
   Flag,
   RefreshCw,
 } from 'lucide-react-native';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { useAdminControls } from '@/app/contexts/AdminControlsContext';
 import { vendors } from '@/mocks/vendors';
 

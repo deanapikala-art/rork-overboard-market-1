@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { Bell, X, CheckCircle, AlertTriangle, AlertCircle, Settings, Trash2 } from 'lucide-react-native';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { useAdminNotifications, AdminNotification, NotificationSeverity } from '@/app/contexts/AdminNotificationsContext';
 import { router } from 'expo-router';
 
