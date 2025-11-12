@@ -100,6 +100,10 @@ export default function MessageThreadScreen() {
   };
 
   const renderMessage = ({ item }: { item: Message }) => {
+    if (!item || !item.body) {
+      return null;
+    }
+
     const isOwn = item.senderID === currentUserID;
     const isAutoReply = item.systemType === 'status' && item.body.includes('Auto-reply') === false && item.senderRole === 'vendor';
     const isSystemNote = item.systemType === 'note';
@@ -143,7 +147,7 @@ export default function MessageThreadScreen() {
             <Text style={styles.senderName}>{item.senderName}</Text>
           )}
           <Text style={[styles.messageText, isOwn && styles.ownMessageText]}>
-            {item.body}
+            {item?.body || ''}
           </Text>
           <View style={styles.messageFooter}>
             <Text style={[styles.messageTime, isOwn && styles.ownMessageTime]}>

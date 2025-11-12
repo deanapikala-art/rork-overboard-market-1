@@ -131,6 +131,10 @@ export default function ChatScreen() {
   };
 
   const renderMessage = ({ item }: { item: Message }) => {
+    if (!item || !item.text) {
+      return null;
+    }
+
     const isOwnMessage = item.senderId === currentUserId;
 
     return (

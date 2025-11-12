@@ -705,27 +705,27 @@ export const [MessagingCenterProvider, useMessagingCenter] = createContextHook<M
   };
 
   const mapDBConversationToConversation = (data: any): Conversation => ({
-    conversationID: data.conversation_id,
-    type: data.type,
-    orderID: data.order_id,
-    participants: data.participants || [],
-    createdAt: data.created_at,
-    updatedAt: data.updated_at,
-    lastMessagePreview: data.last_message_preview,
-    lastMessageAt: data.last_message_at,
-    isArchivedBy: data.is_archived_by || []
+    conversationID: data?.conversation_id || '',
+    type: data?.type || 'General',
+    orderID: data?.order_id,
+    participants: data?.participants || [],
+    createdAt: data?.created_at || new Date().toISOString(),
+    updatedAt: data?.updated_at || new Date().toISOString(),
+    lastMessagePreview: data?.last_message_preview,
+    lastMessageAt: data?.last_message_at,
+    isArchivedBy: data?.is_archived_by || []
   });
 
   const mapDBMessageToMessage = (data: any): Message => ({
-    messageID: data.message_id,
-    conversationID: data.conversation_id,
-    senderID: data.sender_id,
-    senderRole: data.sender_role,
-    body: data.body,
-    attachments: data.attachments || [],
-    createdAt: data.created_at,
-    editedAt: data.edited_at,
-    systemType: data.system_type
+    messageID: data?.message_id || '',
+    conversationID: data?.conversation_id || '',
+    senderID: data?.sender_id || '',
+    senderRole: data?.sender_role || 'customer',
+    body: data?.body || '',
+    attachments: data?.attachments || [],
+    createdAt: data?.created_at || new Date().toISOString(),
+    editedAt: data?.edited_at,
+    systemType: data?.system_type
   });
 
   return {
