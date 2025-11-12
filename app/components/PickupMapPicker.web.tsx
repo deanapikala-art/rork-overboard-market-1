@@ -1,3 +1,5 @@
+// Web-only version - uses web geolocation API
+// Uses web-compatible fallback for react-native-maps
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -32,17 +34,6 @@ export function PickupMapPicker({
   const [isLoadingLocation, setIsLoadingLocation] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    if (pickupGeoLat && pickupGeoLon) {
-      setMarkerCoordinate({ latitude: pickupGeoLat, longitude: pickupGeoLon });
-      setIsLoading(false);
-    } else if (pickupOriginZip && pickupOriginZip.length === 5) {
-      geocodeZip(pickupOriginZip);
-    } else {
-      setIsLoading(false);
-    }
-  }, [pickupOriginZip, pickupGeoLat, pickupGeoLon]);
-
   const geocodeZip = async (zip: string) => {
     try {
       const coords = await getCoordinatesFromZip(zip);
@@ -56,6 +47,17 @@ export function PickupMapPicker({
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (pickupGeoLat && pickupGeoLon) {
+      setMarkerCoordinate({ latitude: pickupGeoLat, longitude: pickupGeoLon });
+      setIsLoading(false);
+    } else if (pickupOriginZip && pickupOriginZip.length === 5) {
+      geocodeZip(pickupOriginZip);
+    } else {
+      setIsLoading(false);
+    }
+  }, [pickupOriginZip, pickupGeoLat, pickupGeoLon]);
 
   const getCoordinatesFromZip = async (zip: string): Promise<{ latitude: number; longitude: number } | null> => {
     try {
