@@ -327,8 +327,8 @@ export default function PolicyCenterScreen() {
             ) : (
               section.content.map((item, index) => (
                 <View key={index} style={styles.subsection}>
-                  <Text style={styles.subsectionTitle}>{item.subtitle}</Text>
-                  <Text style={styles.contentText}>{item.text}</Text>
+                  <Text style={styles.subsectionTitle}>{item?.subtitle || ''}</Text>
+                  <Text style={styles.contentText}>{item?.text || ''}</Text>
                 </View>
               ))
             )}

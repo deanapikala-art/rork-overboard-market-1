@@ -62,6 +62,10 @@ export default function TrustedVendorBadge({
 
   const tierData = getTierData();
 
+  if (!tierData || !tierData.text) {
+    return null;
+  }
+
   if (trustScore < 50 && !verifiedVendor) {
     return null;
   }

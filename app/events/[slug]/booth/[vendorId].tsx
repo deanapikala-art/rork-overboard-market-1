@@ -340,7 +340,7 @@ export default function EventBoothScreen() {
                     </View>
                     <ScrollView style={styles.chatMessages} showsVerticalScrollIndicator={false}>
                       {chatMessages.map((msg, index) => (
-                        <Text key={index} style={styles.chatMessage}>{msg.text}</Text>
+                        msg?.text ? <Text key={index} style={styles.chatMessage}>{msg.text}</Text> : null
                       ))}
                     </ScrollView>
                     <View style={styles.chatInputContainer}>

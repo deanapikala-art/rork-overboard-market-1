@@ -34,8 +34,6 @@ import { startTrackingPolling, stopTrackingPolling } from '@/app/utils/deliveryT
 LogBox.ignoreLogs([
   'deep imports from the "react-native" package are deprecated',
   'source.uri should not be an empty string',
-  'Cannot read properties of undefined',
-  'Can\'t perform a React state update on a component that hasn\'t mounted yet',
 ]);
 
 SplashScreen.preventAutoHideAsync();
