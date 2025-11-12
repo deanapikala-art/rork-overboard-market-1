@@ -8,7 +8,7 @@ import { useCart } from '@/app/contexts/CartContext';
 
 export default function TabLayout() {
   const cart = useCart();
-  const cartItemCount = (cart && cart.isLoaded) ? cart.getCartItemCount() : 0;
+  const cartItemCount = (cart?.isLoaded && cart?.getCartItemCount) ? cart.getCartItemCount() : 0;
 
   return (
     <Tabs

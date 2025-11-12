@@ -34,6 +34,8 @@ import { startTrackingPolling, stopTrackingPolling } from '@/app/utils/deliveryT
 LogBox.ignoreLogs([
   'deep imports from the "react-native" package are deprecated',
   'source.uri should not be an empty string',
+  'Cannot read properties of undefined',
+  'Can\'t perform a React state update on a component that hasn\'t mounted yet',
 ]);
 
 SplashScreen.preventAutoHideAsync();
@@ -148,6 +150,7 @@ function RootLayoutNav() {
       <Stack.Screen 
         name="community/bulletin" 
         options={{ 
+          headerShown: false,
           presentation: 'card',
         }} 
       />
@@ -161,6 +164,7 @@ function RootLayoutNav() {
       <Stack.Screen 
         name="shop-local" 
         options={{ 
+          headerShown: false,
           presentation: 'card',
         }} 
       />
@@ -248,23 +252,37 @@ export default function RootLayout() {
   const [appReady, setAppReady] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
+    
     async function prepare() {
       try {
         await new Promise(resolve => setTimeout(resolve, 100));
       } catch (e) {
         console.warn('Error preparing app:', e);
       } finally {
-        setAppReady(true);
+        if (isMounted) {
+          setAppReady(true);
+        }
       }
     }
 
     prepare();
+    
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
-    if (appReady) {
+    let isMounted = true;
+    
+    if (appReady && isMounted) {
       SplashScreen.hideAsync();
     }
+    
+    return () => {
+      isMounted = false;
+    };
   }, [appReady]);
 
   useEffect(() => {

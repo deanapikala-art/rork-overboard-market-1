@@ -116,6 +116,11 @@ export const [MessagingContext, useMessaging] = createContextHook(() => {
       senderName: string,
       senderType: 'customer' | 'vendor'
     ) => {
+      if (!text || !conversationId || !senderId || !senderName) {
+        console.warn('[Messaging] Missing required parameters for sendMessage');
+        return;
+      }
+      
       const newMessage: Message = {
         id: `msg_${Date.now()}_${Math.random()}`,
         conversationId,
@@ -137,7 +142,7 @@ export const [MessagingContext, useMessaging] = createContextHook(() => {
         if (conv.id === conversationId) {
           return {
             ...conv,
-            lastMessage: text,
+            lastMessage: text || '',
             lastMessageTime: newMessage.timestamp,
             unreadCount: senderType === 'vendor' ? conv.unreadCount + 1 : conv.unreadCount,
           };
