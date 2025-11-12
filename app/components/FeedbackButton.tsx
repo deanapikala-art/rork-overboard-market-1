@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, Platform } from 'react-native';
 import { MessageSquare } from 'lucide-react-native';
 import { useFeedback } from '@/app/contexts/FeedbackContext';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 
 interface FeedbackButtonProps {
   variant?: 'floating' | 'inline';
