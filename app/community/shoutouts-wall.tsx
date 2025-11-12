@@ -14,7 +14,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { useShoutouts } from '@/app/contexts/ShoutoutsContext';
 import { useCustomerAuth } from '@/app/contexts/CustomerAuthContext';
 import PostShoutoutModal from '@/app/components/PostShoutoutModal';

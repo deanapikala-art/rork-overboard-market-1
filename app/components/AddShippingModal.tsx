@@ -11,7 +11,7 @@ import {
   Alert,
 } from 'react-native';
 import { X, Truck, Package, Calendar } from 'lucide-react-native';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 
 interface AddShippingModalProps {
   visible: boolean;

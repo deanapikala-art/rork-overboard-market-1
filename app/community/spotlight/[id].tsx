@@ -12,7 +12,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { getVendorSpotlightById } from '@/mocks/vendorSpotlights';
 import { vendors } from '@/mocks/vendors';
 

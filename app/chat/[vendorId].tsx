@@ -19,7 +19,7 @@ import { useCustomerAuth } from '@/app/contexts/CustomerAuthContext';
 import { useVendorAuth } from '@/app/contexts/VendorAuthContext';
 import { useSafetyFilters } from '@/app/contexts/SafetyFiltersContext';
 import SafetyWarningModal from '@/app/components/SafetyWarningModal';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { vendors } from '@/mocks/vendors';
 
 export default function ChatScreen() {

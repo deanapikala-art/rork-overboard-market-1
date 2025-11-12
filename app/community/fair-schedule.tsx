@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { FairScheduleEvent, getUpcomingEvents, getLiveEvents } from '@/mocks/fairSchedule';
 
 const TYPE_COLORS = {

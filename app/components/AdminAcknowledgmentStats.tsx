@@ -11,9 +11,9 @@ import {
 } from 'react-native';
 import { BarChart3, Users, CheckCircle, Clock, AlertCircle, TrendingUp } from 'lucide-react-native';
 import { supabase } from '@/lib/supabase';
-import Colors from '@/constants/colors';
-import { PolicyType } from '@/contexts/PolicyAcknowledgmentContext';
-import { getPolicyIcon, getPolicyTitle } from '@/constants/policyTemplates';
+import Colors from '@/app/constants/colors';
+import { PolicyType } from '@/app/contexts/PolicyAcknowledgmentContext';
+import { getPolicyIcon, getPolicyTitle } from '@/app/constants/policyTemplates';
 
 interface PolicyStats {
   policy_type: PolicyType;

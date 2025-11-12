@@ -9,12 +9,12 @@ import {
 } from 'react-native';
 import { Stack } from 'expo-router';
 import { FileText, BarChart3, ArrowLeft } from 'lucide-react-native';
-import { PolicyType } from '@/contexts/PolicyAcknowledgmentContext';
-import { AdminPolicyEditor } from '@/components/AdminPolicyEditor';
-import { AdminAcknowledgmentStats } from '@/components/AdminAcknowledgmentStats';
-import { usePolicyAcknowledgment } from '@/contexts/PolicyAcknowledgmentContext';
-import Colors from '@/constants/colors';
-import { getPolicyIcon, getPolicyTitle } from '@/constants/policyTemplates';
+import { PolicyType } from '@/app/contexts/PolicyAcknowledgmentContext';
+import { AdminPolicyEditor } from '@/app/components/AdminPolicyEditor';
+import { AdminAcknowledgmentStats } from '@/app/components/AdminAcknowledgmentStats';
+import { usePolicyAcknowledgment } from '@/app/contexts/PolicyAcknowledgmentContext';
+import Colors from '@/app/constants/colors';
+import { getPolicyIcon, getPolicyTitle } from '@/app/constants/policyTemplates';
 import { router } from 'expo-router';
 
 type ViewMode = 'list' | 'editor' | 'stats';

@@ -12,7 +12,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { bulletinPosts, BulletinPost, getPinnedPosts, getRecentPosts } from '@/mocks/communityBulletin';
 
 const TYPE_COLORS = {

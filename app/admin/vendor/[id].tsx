@@ -17,7 +17,7 @@ import {
   Save,
   AlertCircle,
 } from 'lucide-react-native';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { vendors } from '@/mocks/vendors';
 import { events } from '@/mocks/events';
 

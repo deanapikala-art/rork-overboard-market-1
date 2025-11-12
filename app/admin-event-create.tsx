@@ -18,7 +18,7 @@ import {
   Image as ImageIcon,
   Check,
 } from 'lucide-react-native';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 
 export default function AdminEventCreate() {
   const insets = useSafeAreaInsets();
