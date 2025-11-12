@@ -100,27 +100,10 @@ export const [PolicyAcknowledgmentProvider, usePolicyAcknowledgment] = createCon
     try {
       console.log('[PolicyAcknowledgment] Loading current policies');
       
-      const { data: tableInfo } = await supabase
+      const { data, error } = await supabase
         .from('policy_texts')
         .select('*')
-        .limit(1);
-
-      const hasVersionColumn = tableInfo && tableInfo.length > 0 && 'version' in tableInfo[0];
-      const hasIsActiveColumn = tableInfo && tableInfo.length > 0 && 'is_active' in tableInfo[0];
-
-      let query = supabase.from('policy_texts').select('*');
-      
-      if (hasIsActiveColumn) {
-        query = query.eq('is_active', true);
-      }
-      
-      if (hasVersionColumn) {
-        query = query.order('version', { ascending: false });
-      } else {
-        query = query.order('created_at', { ascending: false });
-      }
-
-      const { data, error } = await query;
+        .order('created_at', { ascending: false });
 
       if (error) {
         console.error('[PolicyAcknowledgment] Error loading policies:', JSON.stringify(error, null, 2));
@@ -130,8 +113,8 @@ export const [PolicyAcknowledgmentProvider, usePolicyAcknowledgment] = createCon
 
       const policies = (data || []).map((policy: any) => ({
         ...policy,
-        version: policy.version ?? 1,
-        is_active: policy.is_active ?? true,
+        version: policy?.version ?? 1,
+        is_active: policy?.is_active ?? true,
       })) as PolicyText[];
 
       const uniquePolicies = policies.reduce((acc: PolicyText[], policy) => {

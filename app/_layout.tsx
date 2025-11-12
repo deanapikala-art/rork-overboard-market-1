@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import React, { useEffect, useState } from "react";
-import { LogBox } from "react-native";
+import React, { useEffect, useState, Component, ErrorInfo, ReactNode } from "react";
+import { LogBox, View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { CartProvider } from '@/app/contexts/CartContext';
 import { OrdersProvider } from '@/app/contexts/OrdersContext';
@@ -46,6 +46,93 @@ LogBox.ignoreLogs([
 SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient();
+
+interface ErrorBoundaryProps {
+  children: ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
+
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('[ErrorBoundary] Caught error:', error);
+    console.error('[ErrorBoundary] Error info:', errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <View style={errorBoundaryStyles.container}>
+          <View style={errorBoundaryStyles.content}>
+            <Text style={errorBoundaryStyles.title}>Oops! Something went wrong</Text>
+            <Text style={errorBoundaryStyles.message}>
+              {this.state.error?.message || 'An unexpected error occurred'}
+            </Text>
+            <TouchableOpacity
+              style={errorBoundaryStyles.button}
+              onPress={() => this.setState({ hasError: false, error: null })}
+            >
+              <Text style={errorBoundaryStyles.buttonText}>Try Again</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+const errorBoundaryStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f8f9fa',
+    padding: 20,
+  },
+  content: {
+    maxWidth: 400,
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: '700' as const,
+    color: '#2B3440',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  message: {
+    fontSize: 16,
+    color: '#6A6F73',
+    textAlign: 'center',
+    marginBottom: 24,
+    lineHeight: 24,
+  },
+  button: {
+    backgroundColor: '#EE6E56',
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 8,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600' as const,
+  },
+});
 
 function RootLayoutNav() {
   return (
@@ -305,6 +392,7 @@ export default function RootLayout() {
   }
 
   return (
+    <ErrorBoundary>
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -360,5 +448,6 @@ export default function RootLayout() {
         </GestureHandlerRootView>
       </QueryClientProvider>
     </trpc.Provider>
+    </ErrorBoundary>
   );
 }

@@ -120,7 +120,7 @@ export async function updateOrderTrackingStatus(
     }
 
     const { error } = await supabase
-      .from('orders')
+      .from('user_orders')
       .update(updateData)
       .eq('id', orderId);
 
@@ -142,12 +142,10 @@ export async function checkAllActiveTrackingOrders(): Promise<void> {
     console.log('[DeliveryTracking] Checking all active tracking orders');
 
     const { data: orders, error } = await supabase
-      .from('orders')
+      .from('user_orders')
       .select('*')
-      .eq('auto_status_updates_enabled', true)
       .not('tracking_number', 'is', null)
-      .in('shipping_status', ['shipped', 'in_transit', 'out_for_delivery'])
-      .is('delivered_at', null);
+      .in('shipping_status', ['shipped', 'in_transit', 'out_for_delivery']);
 
     if (error) {
       console.error('[DeliveryTracking] Error fetching orders:', JSON.stringify(error, null, 2));
@@ -159,9 +157,16 @@ export async function checkAllActiveTrackingOrders(): Promise<void> {
       return;
     }
 
-    console.log('[DeliveryTracking] Found', orders.length, 'orders to check');
+    const ordersWithAutoTracking = orders.filter((order: any) => order?.auto_status_updates_enabled === true && !order?.delivered_at);
 
-    for (const order of orders) {
+    if (ordersWithAutoTracking.length === 0) {
+      console.log('[DeliveryTracking] No orders with auto-tracking enabled');
+      return;
+    }
+
+    console.log('[DeliveryTracking] Found', ordersWithAutoTracking.length, 'orders to check');
+
+    for (const order of ordersWithAutoTracking) {
       try {
         const trackingData = await fetchTrackingStatus(
           order.shipping_provider,
@@ -224,7 +229,7 @@ export async function manuallyMarkAsDelivered(
     console.log('[DeliveryTracking] Manually marking order as delivered:', orderId);
 
     const { error } = await supabase
-      .from('orders')
+      .from('user_orders')
       .update({
         shipping_status: 'delivered',
         delivered_at: new Date().toISOString(),
