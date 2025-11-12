@@ -1,19 +1,23 @@
-import { Dimensions, Platform } from 'react-native';
+import { Dimensions, Platform, PixelRatio } from 'react-native';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+const pixelRatio = PixelRatio.get();
 
 export const BREAKPOINTS = {
-  PHONE_SMALL: 430,
+  PHONE_SMALL: 375,
   PHONE: 768,
   TABLET: 1024,
   DESKTOP: 1440,
 } as const;
 
-export const isSmallPhone = SCREEN_WIDTH <= BREAKPOINTS.PHONE_SMALL;
-export const isPhone = SCREEN_WIDTH <= BREAKPOINTS.PHONE;
-export const isTablet = SCREEN_WIDTH > BREAKPOINTS.PHONE && SCREEN_WIDTH <= BREAKPOINTS.TABLET;
-export const isDesktop = SCREEN_WIDTH > BREAKPOINTS.TABLET;
+export const isIOS = Platform.OS === 'ios';
+export const isAndroid = Platform.OS === 'android';
 export const isWeb = Platform.OS === 'web';
+
+export const isSmallPhone = SCREEN_WIDTH < BREAKPOINTS.PHONE_SMALL;
+export const isPhone = SCREEN_WIDTH < BREAKPOINTS.PHONE;
+export const isTablet = SCREEN_WIDTH >= BREAKPOINTS.PHONE && SCREEN_WIDTH < BREAKPOINTS.TABLET;
+export const isDesktop = SCREEN_WIDTH >= BREAKPOINTS.TABLET;
 
 export const getBreakpoint = (): 'phone-small' | 'phone' | 'tablet' | 'desktop' => {
   if (SCREEN_WIDTH <= BREAKPOINTS.PHONE_SMALL) return 'phone-small';
@@ -87,16 +91,23 @@ export const containerPadding = (): number => {
   const breakpoint = getBreakpoint();
   switch (breakpoint) {
     case 'phone-small':
-      return spacing.base;
+      return spacing.md;
     case 'phone':
       return spacing.lg;
     case 'tablet':
-      return spacing.xl;
-    case 'desktop':
       return spacing['2xl'];
+    case 'desktop':
+      return spacing['3xl'];
     default:
       return spacing.lg;
   }
+};
+
+export const horizontalPadding = (): number => {
+  if (isWeb && SCREEN_WIDTH > BREAKPOINTS.DESKTOP) {
+    return Math.min((SCREEN_WIDTH - BREAKPOINTS.DESKTOP) / 2, 200);
+  }
+  return containerPadding();
 };
 
 export const maxContainerWidth = (): number | string => {
@@ -201,6 +212,32 @@ export const getVideoHeight = (width: number): number => {
   return (width * 9) / 16;
 };
 
+export const platformSelect = <T,>(options: {
+  ios?: T;
+  android?: T;
+  web?: T;
+  default: T;
+}): T => {
+  if (Platform.OS === 'ios' && options.ios !== undefined) return options.ios;
+  if (Platform.OS === 'android' && options.android !== undefined) return options.android;
+  if (Platform.OS === 'web' && options.web !== undefined) return options.web;
+  return options.default;
+};
+
+export const getContentMaxWidth = (): number | string => {
+  if (isDesktop) return BREAKPOINTS.DESKTOP;
+  if (isTablet) return BREAKPOINTS.TABLET;
+  return '100%';
+};
+
+export const isTouchDevice = (): boolean => {
+  return Platform.OS === 'ios' || Platform.OS === 'android';
+};
+
+export const isHighDensity = (): boolean => {
+  return pixelRatio >= 2;
+};
+
 export const responsive = {
   scale,
   verticalScale,
@@ -210,6 +247,7 @@ export const responsive = {
   borderRadius,
   iconSize,
   containerPadding,
+  horizontalPadding,
   maxContainerWidth,
   gridGap,
   bannerHeight,
@@ -223,8 +261,19 @@ export const responsive = {
   ensureTouchTarget,
   getVideoAspectRatio,
   getVideoHeight,
+  platformSelect,
+  getContentMaxWidth,
+  isTouchDevice,
+  isHighDensity,
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
+  isIOS,
+  isAndroid,
+  isWeb,
+  isSmallPhone,
+  isPhone,
+  isTablet,
+  isDesktop,
 };
 
 export default responsive;

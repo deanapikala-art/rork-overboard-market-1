@@ -21,6 +21,7 @@ import { getFeaturedSpotlights } from '@/mocks/vendorSpotlights';
 import { vendors } from '@/mocks/vendors';
 import { useCustomerAuth } from '@/app/contexts/CustomerAuthContext';
 import HamburgerMenu from '@/app/components/HamburgerMenu';
+import { useResponsive } from '@/app/hooks/useResponsive';
 import responsive from '@/app/constants/responsive';
 
 interface FeatureBanner {
@@ -37,6 +38,7 @@ export default function HomeScreen() {
   const { isLoading, profile } = useCustomerAuth();
   const [currentBanner, setCurrentBanner] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
+  useResponsive();
 
   const liveEvents = events.filter(event => event.status === 'live');
   const spotlights = getFeaturedSpotlights(3);
@@ -559,11 +561,13 @@ const styles = StyleSheet.create({
   },
   quickActions: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     paddingHorizontal: 20,
     gap: 14,
   },
   quickActionButton: {
     flex: 1,
+    minWidth: '30%',
     borderRadius: 16,
     overflow: 'hidden',
     shadowColor: '#000',
@@ -645,6 +649,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 24,

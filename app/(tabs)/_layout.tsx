@@ -1,13 +1,15 @@
 import { Tabs } from 'expo-router';
 import { Home, ShoppingBag, Store, ShoppingCart, Users, Calendar } from 'lucide-react-native';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 
 import Colors from '@/app/constants/colors';
 import { useCart } from '@/app/contexts/CartContext';
+import { useResponsive } from '@/app/hooks/useResponsive';
 
 export default function TabLayout() {
   const cart = useCart();
+  const { isTablet, isDesktop } = useResponsive();
   
   let cartItemCount = 0;
   try {
@@ -17,6 +19,9 @@ export default function TabLayout() {
   } catch (error) {
     console.warn('Error getting cart item count:', error);
   }
+
+  const iconSizeValue = isTablet || isDesktop ? 26 : 24;
+  const labelFontSize = isTablet || isDesktop ? 12 : 11;
 
   return (
     <Tabs
@@ -29,8 +34,9 @@ export default function TabLayout() {
             borderTopColor: '#E5E7EB',
           },
           tabBarLabelStyle: {
-            fontSize: 11,
+            fontSize: labelFontSize,
             fontWeight: '600' as const,
+            marginBottom: Platform.OS === 'android' ? 4 : 0,
           },
           tabBarInactiveTintColor: Colors.light.driftwoodGray,
         }}
@@ -40,21 +46,21 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           headerTitle: 'Overboard Market',
-          tabBarIcon: ({ color }) => <Home size={24} color={color} />,
+          tabBarIcon: ({ color }) => <Home size={iconSizeValue} color={color} />,
         }}
       />
       <Tabs.Screen
         name="shop"
         options={{
           title: 'Shop',
-          tabBarIcon: ({ color }) => <ShoppingBag size={24} color={color} />,
+          tabBarIcon: ({ color }) => <ShoppingBag size={iconSizeValue} color={color} />,
         }}
       />
       <Tabs.Screen
         name="vendors"
         options={{
           title: 'Vendors',
-          tabBarIcon: ({ color }) => <Store size={24} color={color} />,
+          tabBarIcon: ({ color }) => <Store size={iconSizeValue} color={color} />,
         }}
       />
       <Tabs.Screen
@@ -63,10 +69,12 @@ export default function TabLayout() {
           title: 'Cart',
           tabBarIcon: ({ color }) => (
             <View style={styles.cartIconContainer}>
-              <ShoppingCart size={24} color={color} />
+              <ShoppingCart size={iconSizeValue} color={color} />
               {cartItemCount > 0 && (
-                <View style={styles.badge}>
-                  <Text style={styles.badgeText}>{cartItemCount > 99 ? '99+' : cartItemCount}</Text>
+                <View style={[styles.badge, isTablet && styles.badgeLarge]}>
+                  <Text style={[styles.badgeText, isTablet && styles.badgeTextLarge]}>
+                    {cartItemCount > 99 ? '99+' : cartItemCount}
+                  </Text>
                 </View>
               )}
             </View>
@@ -77,14 +85,14 @@ export default function TabLayout() {
         name="events"
         options={{
           title: 'Events',
-          tabBarIcon: ({ color }) => <Calendar size={24} color={color} />,
+          tabBarIcon: ({ color }) => <Calendar size={iconSizeValue} color={color} />,
         }}
       />
       <Tabs.Screen
         name="community"
         options={{
           title: 'Community',
-          tabBarIcon: ({ color }) => <Users size={24} color={color} />,
+          tabBarIcon: ({ color }) => <Users size={iconSizeValue} color={color} />,
         }}
       />
       <Tabs.Screen
@@ -129,5 +137,15 @@ const styles = StyleSheet.create({
     color: Colors.light.card,
     fontSize: 10,
     fontWeight: '700' as const,
+  },
+  badgeLarge: {
+    minWidth: 22,
+    height: 22,
+    top: -8,
+    right: -12,
+    paddingHorizontal: 6,
+  },
+  badgeTextLarge: {
+    fontSize: 11,
   },
 });
