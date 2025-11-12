@@ -75,7 +75,19 @@ export const [FavoritesProvider, useFavorites] = createContextHook<FavoritesCont
   }, [isAuthenticated, user]);
 
   useEffect(() => {
-    loadFavorites();
+    let isMounted = true;
+    
+    const load = async () => {
+      if (isMounted) {
+        await loadFavorites();
+      }
+    };
+    
+    load();
+    
+    return () => {
+      isMounted = false;
+    };
   }, [loadFavorites]);
 
   useEffect(() => {

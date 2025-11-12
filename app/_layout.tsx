@@ -34,6 +34,11 @@ import { startTrackingPolling, stopTrackingPolling } from '@/app/utils/deliveryT
 LogBox.ignoreLogs([
   'deep imports from the "react-native" package are deprecated',
   'source.uri should not be an empty string',
+  'Setting a timer',
+  'Non-serializable values were found in the navigation state',
+  'VirtualizedLists should never be nested',
+  'Sending \`onAnimatedValueUpdate\` with no listeners registered',
+  'Require cycle:',
 ]);
 
 SplashScreen.preventAutoHideAsync();

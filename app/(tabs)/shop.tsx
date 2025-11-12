@@ -28,7 +28,7 @@ const CATEGORY_OPTIONS = [
   { group: 'Specialty', categories: SERVICE_CATEGORIES.SPECIALTY },
 ];
 
-console.log('CATEGORY_OPTIONS:', CATEGORY_OPTIONS);
+
 
 export default function ShopScreen() {
   const { profile, isAuthenticated } = useCustomerAuth();

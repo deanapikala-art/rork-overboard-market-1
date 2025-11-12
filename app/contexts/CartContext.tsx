@@ -176,9 +176,19 @@ const [CartProvider, useCart] = createContextHook<CartContextValue>(() => {
   }, [items, isAuthenticated, user]);
 
   useEffect(() => {
-    if (isLoaded) {
-      saveCart();
-    }
+    let isMounted = true;
+    
+    const save = async () => {
+      if (isLoaded && isMounted) {
+        await saveCart();
+      }
+    };
+    
+    save();
+    
+    return () => {
+      isMounted = false;
+    };
   }, [items, isLoaded, saveCart]);
 
   const addItem = useCallback(async (product: Product, vendor: Vendor, quantity: number = 1, customizations?: CustomizationValue[], requiresProof?: boolean): Promise<'added'> => {

@@ -154,7 +154,15 @@ export const [VendorLiveProvider, useVendorLive] = createContextHook<VendorLiveC
   }, []);
 
   useEffect(() => {
-    refreshLiveVendors();
+    let isMounted = true;
+    
+    const loadInitialData = async () => {
+      if (isMounted) {
+        await refreshLiveVendors();
+      }
+    };
+    
+    loadInitialData();
     
     const channel = supabase
       .channel('live-vendors-changes')
@@ -167,8 +175,10 @@ export const [VendorLiveProvider, useVendorLive] = createContextHook<VendorLiveC
           filter: 'is_live=eq.true',
         },
         () => {
-          console.log('[VendorLive] Realtime: Vendor live status changed');
-          refreshLiveVendors();
+          if (isMounted) {
+            console.log('[VendorLive] Realtime: Vendor live status changed');
+            refreshLiveVendors();
+          }
         }
       )
       .on(
@@ -179,21 +189,22 @@ export const [VendorLiveProvider, useVendorLive] = createContextHook<VendorLiveC
           table: 'vendor_live_sessions',
         },
         () => {
-          console.log('[VendorLive] Realtime: Live session changed');
-          refreshLiveVendors();
+          if (isMounted) {
+            console.log('[VendorLive] Realtime: Live session changed');
+            refreshLiveVendors();
+          }
         }
       )
       .subscribe();
 
-
-
     return () => {
+      isMounted = false;
       if (channel) {
         console.log('[VendorLive] Unsubscribing from realtime channel');
         supabase.removeChannel(channel);
       }
     };
-  }, []);
+  }, [refreshLiveVendors]);
 
   const goLive = useCallback(async (
     vendorId: string,
