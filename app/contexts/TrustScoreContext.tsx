@@ -46,7 +46,8 @@ export interface TrustScoreBreakdown {
 }
 
 export const [TrustScoreContext, useTrustScore] = createContextHook(() => {
-  const { vendorProfile } = useVendorAuth();
+  const vendorAuth = useVendorAuth() || { profile: null };
+  const vendorProfile = vendorAuth.profile;
   const [trustData, setTrustData] = useState<TrustScoreData | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);

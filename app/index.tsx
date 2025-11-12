@@ -1,6 +1,13 @@
-import { Redirect } from 'expo-router';
-import React from 'react';
+import { useRouter } from 'expo-router';
+import React, { useEffect } from 'react';
+import { View } from 'react-native';
 
 export default function IndexPage() {
-  return <Redirect href="/welcome" />;
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace('/welcome');
+  }, [router]);
+
+  return <View style={{ flex: 1 }} />;
 }

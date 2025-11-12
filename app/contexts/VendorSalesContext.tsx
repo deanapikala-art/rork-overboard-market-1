@@ -47,7 +47,7 @@ type VendorSalesContextValue = {
 
 export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSalesContextValue>(() => {
   const [isLoading, setIsLoading] = useState(false);
-  const vendorAuth = useVendorAuth();
+  const vendorAuth = useVendorAuth() || { profile: null };
 
   const fetchSales = useCallback(async (filters?: {
     active?: boolean;
