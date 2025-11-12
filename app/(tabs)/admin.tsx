@@ -31,7 +31,7 @@ import {
   ExternalLink,
   LogOut,
 } from 'lucide-react-native';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { vendorApplications, VendorApplication } from '@/mocks/vendorApplications';
 import HamburgerMenu from '@/app/components/HamburgerMenu';
 import { analyticsData } from '@/mocks/analytics';

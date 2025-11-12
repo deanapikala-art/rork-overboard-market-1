@@ -41,7 +41,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { events } from '@/mocks/events';
 import HamburgerMenu from '@/app/components/HamburgerMenu';
 import { useAuth } from '@/app/contexts/AuthContext';
