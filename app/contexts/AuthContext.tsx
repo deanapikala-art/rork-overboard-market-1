@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import createContextHook from '@nkzw/create-context-hook';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 const STORAGE_KEYS = {
   VENDOR_SESSION: '@overboard_vendor_session',
@@ -31,38 +31,65 @@ export const [AuthContext, useAuth] = createContextHook(() => {
   const [adminSession, setAdminSession] = useState<AdminSession | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    loadSessions();
-  }, []);
-
-  const loadSessions = async () => {
+  const loadSessions = useCallback(async () => {
+    let isMounted = true;
+    
     try {
       const [vendorData, adminData] = await Promise.all([
         AsyncStorage.getItem(STORAGE_KEYS.VENDOR_SESSION),
         AsyncStorage.getItem(STORAGE_KEYS.ADMIN_SESSION),
       ]);
 
+      if (!isMounted) return;
+
       if (adminData) {
         const admin: AdminSession = JSON.parse(adminData);
-        setAdminSession(admin);
-        setUserRole('admin');
-        console.log('[AuthContext] Admin session loaded:', admin.email);
+        if (isMounted) {
+          setAdminSession(admin);
+          setUserRole('admin');
+          console.log('[AuthContext] Admin session loaded:', admin.email);
+        }
       } else if (vendorData) {
         const vendor: VendorSession = JSON.parse(vendorData);
-        setVendorSession(vendor);
-        setUserRole('vendor');
-        console.log('[AuthContext] Vendor session loaded:', vendor.email);
+        if (isMounted) {
+          setVendorSession(vendor);
+          setUserRole('vendor');
+          console.log('[AuthContext] Vendor session loaded:', vendor.email);
+        }
       } else {
-        setUserRole('guest');
-        console.log('[AuthContext] No active session found');
+        if (isMounted) {
+          setUserRole('guest');
+          console.log('[AuthContext] No active session found');
+        }
       }
     } catch (error) {
+      if (!isMounted) return;
       console.error('[AuthContext] Error loading sessions:', error);
-      setUserRole('guest');
+      if (isMounted) {
+        setUserRole('guest');
+      }
     } finally {
-      setIsLoading(false);
+      if (isMounted) {
+        setIsLoading(false);
+      }
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+    
+    const load = async () => {
+      if (isMounted) {
+        await loadSessions();
+      }
+    };
+    
+    load();
+    
+    return () => {
+      isMounted = false;
+    };
+  }, [loadSessions]);
 
   const signInAsAdmin = async (email: string) => {
     try {

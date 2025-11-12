@@ -11,7 +11,9 @@ export default function TabLayout() {
   
   let cartItemCount = 0;
   try {
-    cartItemCount = (cart?.isLoaded && cart?.getCartItemCount) ? cart.getCartItemCount() : 0;
+    if (cart && cart.isLoaded && typeof cart.getCartItemCount === 'function') {
+      cartItemCount = cart.getCartItemCount();
+    }
   } catch (error) {
     console.warn('Error getting cart item count:', error);
   }
