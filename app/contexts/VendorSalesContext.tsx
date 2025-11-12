@@ -47,7 +47,7 @@ type VendorSalesContextValue = {
 
 export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSalesContextValue>(() => {
   const [isLoading, setIsLoading] = useState(false);
-  const vendorAuth = useVendorAuth() || { profile: null };
+  const vendorAuth = useVendorAuth();
 
   const fetchSales = useCallback(async (filters?: {
     active?: boolean;
@@ -55,7 +55,7 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
   }): Promise<VendorSale[]> => {
     let isMounted = true;
     try {
-      setIsLoading(true);
+      if (isMounted) setIsLoading(true);
       console.log('[VendorSalesContext] Fetching sales with filters:', filters);
 
       let query = supabase
@@ -103,7 +103,7 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
 
     let isMounted = true;
     try {
-      setIsLoading(true);
+      if (isMounted) setIsLoading(true);
       console.log('[VendorSalesContext] Fetching my sales');
 
       const { data, error } = await supabase
@@ -142,7 +142,7 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
 
     let isMounted = true;
     try {
-      setIsLoading(true);
+      if (isMounted) setIsLoading(true);
       console.log('[VendorSalesContext] Creating sale:', sale.title);
 
       const { data, error } = await supabase
@@ -181,7 +181,7 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
 
     let isMounted = true;
     try {
-      setIsLoading(true);
+      if (isMounted) setIsLoading(true);
       console.log('[VendorSalesContext] Updating sale:', id);
 
       const { error } = await supabase
@@ -216,7 +216,7 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
 
     let isMounted = true;
     try {
-      setIsLoading(true);
+      if (isMounted) setIsLoading(true);
       console.log('[VendorSalesContext] Deleting sale:', id);
 
       const { error } = await supabase

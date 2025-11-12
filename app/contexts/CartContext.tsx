@@ -115,7 +115,15 @@ const [CartProvider, useCart] = createContextHook<CartContextValue>(() => {
 
   useEffect(() => {
     let isMounted = true;
-    loadCart();
+    
+    const load = async () => {
+      if (isMounted) {
+        await loadCart();
+      }
+    };
+    
+    load();
+    
     return () => {
       isMounted = false;
     };

@@ -11,16 +11,18 @@ export default function TabLayout() {
   const cart = useCart();
   const { isTablet, isDesktop } = useResponsive();
   
-  let cartItemCount = 0;
-  try {
-    if (cart && cart.isLoaded && typeof cart.getCartItemCount === 'function') {
-      const count = cart.getCartItemCount();
-      cartItemCount = typeof count === 'number' && !isNaN(count) ? count : 0;
+  const cartItemCount = React.useMemo(() => {
+    try {
+      if (cart && cart.isLoaded && typeof cart.getCartItemCount === 'function') {
+        const count = cart.getCartItemCount();
+        return typeof count === 'number' && !isNaN(count) ? count : 0;
+      }
+      return 0;
+    } catch (error) {
+      console.warn('[TabLayout] Error getting cart item count:', error);
+      return 0;
     }
-  } catch (error) {
-    console.warn('[TabLayout] Error getting cart item count:', error);
-    cartItemCount = 0;
-  }
+  }, [cart]);
 
   const iconSizeValue = isTablet || isDesktop ? 26 : 24;
   const labelFontSize = isTablet || isDesktop ? 12 : 11;

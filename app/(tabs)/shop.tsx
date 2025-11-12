@@ -216,7 +216,7 @@ export default function ShopScreen() {
 
   const renderHeader = () => (
     <>
-      {isAuthenticated && profile && (
+      {isAuthenticated && profile?.name && (
         <View style={styles.welcomeBar}>
           <Text style={styles.welcomeText}>Welcome back, {profile.name.split(' ')[0]}! 👋</Text>
         </View>

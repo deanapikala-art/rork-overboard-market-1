@@ -111,7 +111,7 @@ export default function HomeScreen() {
               style={styles.logo}
               contentFit="contain"
             />
-            {profile ? (
+            {profile?.name ? (
               <Text style={styles.welcomeText}>Welcome back, {profile.name}! 👋</Text>
             ) : (
               <Text style={styles.welcomeText}>Welcome to Overboard Market! 🌊</Text>
