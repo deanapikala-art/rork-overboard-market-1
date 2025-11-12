@@ -189,7 +189,7 @@ export default function VendorSalesScreen() {
 
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <ArrowLeft size={24} color={Colors.dark.text} />
+          <ArrowLeft size={24} color={Colors?.light?.text ?? '#2B3440'} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Sales & Promotions</Text>
         <TouchableOpacity
@@ -467,7 +467,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20,
     fontWeight: '700' as const,
-    color: Colors.dark.text,
+    color: Colors?.light?.text ?? '#2B3440',
   },
   addButton: {
     padding: 8,
@@ -492,13 +492,13 @@ const styles = StyleSheet.create({
   formTitle: {
     fontSize: 18,
     fontWeight: '700' as const,
-    color: Colors.dark.text,
+    color: Colors?.light?.text ?? '#2B3440',
     marginBottom: 16,
   },
   label: {
     fontSize: 14,
     fontWeight: '600' as const,
-    color: Colors.dark.text,
+    color: Colors?.light?.text ?? '#2B3440',
     marginBottom: 8,
     marginTop: 12,
   },
@@ -508,7 +508,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
-    color: Colors.dark.text,
+    color: Colors?.light?.text ?? '#2B3440',
     backgroundColor: '#fff',
   },
   textArea: {
@@ -560,7 +560,7 @@ const styles = StyleSheet.create({
   },
   dateButtonText: {
     fontSize: 16,
-    color: Colors.dark.text,
+    color: Colors?.light?.text ?? '#2B3440',
   },
   formActions: {
     flexDirection: 'row',
@@ -578,7 +578,7 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     fontSize: 16,
     fontWeight: '600' as const,
-    color: Colors.dark.text,
+    color: Colors?.light?.text ?? '#2B3440',
   },
   submitButton: {
     flex: 1,
@@ -613,7 +613,7 @@ const styles = StyleSheet.create({
   filterTabText: {
     fontSize: 14,
     fontWeight: '600' as const,
-    color: Colors.dark.text,
+    color: Colors?.light?.text ?? '#2B3440',
   },
   filterTabTextActive: {
     color: '#fff',
@@ -629,7 +629,7 @@ const styles = StyleSheet.create({
   emptyStateText: {
     fontSize: 18,
     fontWeight: '600' as const,
-    color: Colors.dark.text,
+    color: Colors?.light?.text ?? '#2B3440',
     marginTop: 16,
   },
   emptyStateSubtext: {
@@ -659,7 +659,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     fontWeight: '700' as const,
-    color: Colors.dark.text,
+    color: Colors?.light?.text ?? '#2B3440',
   },
   saleActions: {
     flexDirection: 'row',

@@ -101,7 +101,7 @@ export default function CurrentSalesScreen() {
 
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <ArrowLeft size={24} color={Colors.dark.text} />
+          <ArrowLeft size={24} color={Colors?.light?.text ?? '#2B3440'} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Current Sales</Text>
         <View style={{ width: 40 }} />
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20,
     fontWeight: '700' as const,
-    color: Colors.dark.text,
+    color: Colors?.light?.text ?? '#2B3440',
   },
   searchContainer: {
     flexDirection: 'row',
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: 16,
-    color: Colors.dark.text,
+    color: Colors?.light?.text ?? '#2B3440',
   },
   filterScroll: {
     maxHeight: 50,
@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
   emptyStateText: {
     fontSize: 18,
     fontWeight: '600' as const,
-    color: Colors.dark.text,
+    color: Colors?.light?.text ?? '#2B3440',
     marginTop: 16,
   },
   emptyStateSubtext: {
@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
   saleTitle: {
     fontSize: 18,
     fontWeight: '700' as const,
-    color: Colors.dark.text,
+    color: Colors?.light?.text ?? '#2B3440',
     marginBottom: 4,
   },
   vendorRow: {

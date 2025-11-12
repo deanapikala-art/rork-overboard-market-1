@@ -85,4 +85,15 @@ export default {
     oceanFoam: '#A3C5C4',
   },
   white: colors.white,
+  
+  primary: colors.sunsetCoral,
+  secondary: colors.mutedTeal,
+  background: colors.warmSand,
+  text: colors.charcoalNavy,
+  textLight: colors.driftwoodGray,
+  border: '#e5e7eb',
+  neutralGray: '#9ca3af',
+  success: '#10b981',
+  warning: '#f59e0b',
+  error: '#ef4444',
 };
