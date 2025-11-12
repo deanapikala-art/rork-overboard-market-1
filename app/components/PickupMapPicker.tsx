@@ -7,12 +7,23 @@ import {
   Alert,
   Dimensions,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import { MapPin, Navigation, RotateCcw, ExternalLink } from 'lucide-react-native';
 import * as Location from 'expo-location';
 import * as Linking from 'expo-linking';
 import Colors from '@/app/constants/colors';
-import MapView, { Marker, Circle } from 'react-native-maps';
+
+let MapView: any;
+let Marker: any;
+let Circle: any;
+
+if (Platform.OS !== 'web') {
+  const Maps = require('react-native-maps');
+  MapView = Maps.default;
+  Marker = Maps.Marker;
+  Circle = Maps.Circle;
+}
 
 interface PickupMapPickerProps {
   pickupOriginZip: string;
