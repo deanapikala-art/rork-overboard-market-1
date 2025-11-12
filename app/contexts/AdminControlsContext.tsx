@@ -500,7 +500,7 @@ const [AdminControlsProvider, useAdminControls] = createContextHook<AdminControl
       console.log('[AdminControls] Creating dispute for order:', orderId);
       
       const { data: order, error: orderError } = await supabase
-        .from('user_orders')
+        .from('orders')
         .select('*')
         .eq('id', orderId)
         .single();

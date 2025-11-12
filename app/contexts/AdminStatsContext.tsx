@@ -153,7 +153,7 @@ const [AdminStatsProvider, useAdminStats] = createContextHook<AdminStatsContextV
       console.log('[AdminStats] Loading stats for vendor:', vendorId);
       
       const { data: orders, error } = await supabase
-        .from('user_orders')
+        .from('orders')
         .select('*')
         .eq('vendor_id', vendorId)
         .eq('confirmed_by_vendor', true);

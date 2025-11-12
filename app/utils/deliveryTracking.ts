@@ -120,7 +120,7 @@ export async function updateOrderTrackingStatus(
     }
 
     const { error } = await supabase
-      .from('user_orders')
+      .from('orders')
       .update(updateData)
       .eq('id', orderId);
 
@@ -142,7 +142,7 @@ export async function checkAllActiveTrackingOrders(): Promise<void> {
     console.log('[DeliveryTracking] Checking all active tracking orders');
 
     const { data: orders, error } = await supabase
-      .from('user_orders')
+      .from('orders')
       .select('*')
       .not('tracking_number', 'is', null)
       .in('shipping_status', ['shipped', 'in_transit', 'out_for_delivery']);
@@ -229,7 +229,7 @@ export async function manuallyMarkAsDelivered(
     console.log('[DeliveryTracking] Manually marking order as delivered:', orderId);
 
     const { error } = await supabase
-      .from('user_orders')
+      .from('orders')
       .update({
         shipping_status: 'delivered',
         delivered_at: new Date().toISOString(),

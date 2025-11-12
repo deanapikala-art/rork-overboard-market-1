@@ -111,7 +111,7 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
     try {
       console.log('[Orders] Loading customer orders for user:', user.id);
       const { data, error } = await supabase
-        .from('user_orders')
+        .from('orders')
         .select('*')
         .eq('customer_id', user.id)
         .order('created_at', { ascending: false });
@@ -152,7 +152,7 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
     try {
       console.log('[Orders] Loading vendor orders');
       const { data, error } = await supabase
-        .from('user_orders')
+        .from('orders')
         .select('*')
         .order('created_at', { ascending: false });
 
@@ -236,7 +236,7 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
       console.log('[Orders] Creating order:', orderData);
 
       const { data, error } = await supabase
-        .from('user_orders')
+        .from('orders')
         .insert(orderData)
         .select()
         .single();
@@ -267,7 +267,7 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
       console.log('[Orders] Confirming order:', orderId);
       
       const { error } = await supabase
-        .from('user_orders')
+        .from('orders')
         .update({
           status: 'completed',
           confirmed_by_vendor: true,
@@ -304,7 +304,7 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
       console.log('[Orders] Cancelling order:', orderId);
       
       const { error } = await supabase
-        .from('user_orders')
+        .from('orders')
         .update({
           status: 'cancelled',
         })
@@ -347,7 +347,7 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
       console.log('[Orders] Generated tracking URL:', trackingUrl);
       
       const { error } = await supabase
-        .from('user_orders')
+        .from('orders')
         .update({
           shipping_status: 'shipped',
           shipping_provider: shippingInfo.provider,
@@ -388,7 +388,7 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
       console.log('[Orders] Marking order as delivered:', orderId);
       
       const { error } = await supabase
-        .from('user_orders')
+        .from('orders')
         .update({
           shipping_status: 'delivered',
           delivered_at: new Date().toISOString(),
@@ -423,7 +423,7 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
       console.log('[Orders] Marking order as picked up:', orderId);
       
       const { error } = await supabase
-        .from('user_orders')
+        .from('orders')
         .update({
           shipping_status: 'picked_up',
           delivered_at: new Date().toISOString(),
@@ -457,7 +457,7 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
       console.log('[Orders] Verifying pickup code for order:', orderId);
       
       const { data: order, error: fetchError } = await supabase
-        .from('user_orders')
+        .from('orders')
         .select('*')
         .eq('id', orderId)
         .single();
@@ -481,7 +481,7 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
       }
 
       const { error: updateError } = await supabase
-        .from('user_orders')
+        .from('orders')
         .update({
           shipping_status: 'picked_up',
           pickup_code_verified_at: new Date().toISOString(),
