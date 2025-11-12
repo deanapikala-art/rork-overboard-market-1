@@ -109,7 +109,19 @@ export const [MessagingCenterProvider, useMessagingCenter] = createContextHook<M
   const [currentUserRole, setCurrentUserRole] = useState<UserRole | null>(null);
 
   useEffect(() => {
-    initializeUser();
+    let isMounted = true;
+    
+    const init = async () => {
+      if (isMounted) {
+        await initializeUser();
+      }
+    };
+    
+    init();
+    
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const initializeUser = async () => {
@@ -137,14 +149,20 @@ export const [MessagingCenterProvider, useMessagingCenter] = createContextHook<M
   const getCurrentUserRole = useCallback(() => currentUserRole, [currentUserRole]);
 
   useEffect(() => {
-    if (activeConversation) {
-      const unsubMessages = subscribeToMessages(activeConversation.conversationID);
-      const unsubTyping = subscribeToTypingIndicators(activeConversation.conversationID);
-      return () => {
-        unsubMessages();
-        unsubTyping();
-      };
+    let isMounted = true;
+    let unsubMessages: (() => void) | null = null;
+    let unsubTyping: (() => void) | null = null;
+    
+    if (activeConversation && isMounted) {
+      unsubMessages = subscribeToMessages(activeConversation.conversationID);
+      unsubTyping = subscribeToTypingIndicators(activeConversation.conversationID);
     }
+    
+    return () => {
+      isMounted = false;
+      if (unsubMessages) unsubMessages();
+      if (unsubTyping) unsubTyping();
+    };
   }, [activeConversation?.conversationID]);
 
   const subscribeToMessages = (conversationID: string) => {
@@ -162,8 +180,10 @@ export const [MessagingCenterProvider, useMessagingCenter] = createContextHook<M
         },
         (payload) => {
           console.log('[MessagingCenter] New message received:', payload.new);
-          const newMessage = mapDBMessageToMessage(payload.new);
-          setMessages(prev => [...prev, newMessage]);
+          if (payload.new) {
+            const newMessage = mapDBMessageToMessage(payload.new);
+            setMessages(prev => [...prev, newMessage]);
+          }
         }
       )
       .subscribe();
@@ -187,19 +207,21 @@ export const [MessagingCenterProvider, useMessagingCenter] = createContextHook<M
         async (payload) => {
           if (payload.eventType === 'INSERT' || payload.eventType === 'UPDATE') {
             const indicator = payload.new as any;
-            if (indicator.is_typing && indicator.user_id !== currentUserID) {
+            if (indicator && indicator.is_typing && indicator.user_id !== currentUserID) {
               const userName = await getUserName(indicator.user_id);
               setTypingUsers(prev => {
                 const exists = prev.find(u => u.userID === indicator.user_id);
                 if (exists) return prev;
                 return [...prev, { userID: indicator.user_id, name: userName }];
               });
-            } else {
+            } else if (indicator) {
               setTypingUsers(prev => prev.filter(u => u.userID !== indicator.user_id));
             }
           } else if (payload.eventType === 'DELETE') {
             const indicator = payload.old as any;
-            setTypingUsers(prev => prev.filter(u => u.userID !== indicator.user_id));
+            if (indicator) {
+              setTypingUsers(prev => prev.filter(u => u.userID !== indicator.user_id));
+            }
           }
         }
       )
@@ -704,29 +726,58 @@ export const [MessagingCenterProvider, useMessagingCenter] = createContextHook<M
     }
   };
 
-  const mapDBConversationToConversation = (data: any): Conversation => ({
-    conversationID: data?.conversation_id || '',
-    type: data?.type || 'General',
-    orderID: data?.order_id,
-    participants: data?.participants || [],
-    createdAt: data?.created_at || new Date().toISOString(),
-    updatedAt: data?.updated_at || new Date().toISOString(),
-    lastMessagePreview: data?.last_message_preview,
-    lastMessageAt: data?.last_message_at,
-    isArchivedBy: data?.is_archived_by || []
-  });
+  const mapDBConversationToConversation = (data: any): Conversation => {
+    if (!data || typeof data !== 'object') {
+      console.warn('[MessagingCenter] Invalid conversation data:', data);
+      return {
+        conversationID: '',
+        type: 'General',
+        participants: [],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        isArchivedBy: []
+      };
+    }
+    
+    return {
+      conversationID: data.conversation_id || '',
+      type: data.type || 'General',
+      orderID: data.order_id,
+      participants: Array.isArray(data.participants) ? data.participants : [],
+      createdAt: data.created_at || new Date().toISOString(),
+      updatedAt: data.updated_at || new Date().toISOString(),
+      lastMessagePreview: data.last_message_preview,
+      lastMessageAt: data.last_message_at,
+      isArchivedBy: Array.isArray(data.is_archived_by) ? data.is_archived_by : []
+    };
+  };
 
-  const mapDBMessageToMessage = (data: any): Message => ({
-    messageID: data?.message_id || '',
-    conversationID: data?.conversation_id || '',
-    senderID: data?.sender_id || '',
-    senderRole: data?.sender_role || 'customer',
-    body: data?.body || '',
-    attachments: data?.attachments || [],
-    createdAt: data?.created_at || new Date().toISOString(),
-    editedAt: data?.edited_at,
-    systemType: data?.system_type
-  });
+  const mapDBMessageToMessage = (data: any): Message => {
+    if (!data || typeof data !== 'object') {
+      console.warn('[MessagingCenter] Invalid message data:', data);
+      return {
+        messageID: '',
+        conversationID: '',
+        senderID: '',
+        senderRole: 'customer',
+        body: '',
+        attachments: [],
+        createdAt: new Date().toISOString()
+      };
+    }
+    
+    return {
+      messageID: data.message_id || '',
+      conversationID: data.conversation_id || '',
+      senderID: data.sender_id || '',
+      senderRole: data.sender_role || 'customer',
+      body: data.body || '',
+      attachments: Array.isArray(data.attachments) ? data.attachments : [],
+      createdAt: data.created_at || new Date().toISOString(),
+      editedAt: data.edited_at,
+      systemType: data.system_type
+    };
+  };
 
   return {
     conversations,

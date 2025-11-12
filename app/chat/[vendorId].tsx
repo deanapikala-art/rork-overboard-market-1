@@ -43,30 +43,64 @@ export default function ChatScreen() {
   const currentUserType = isVendorView ? 'vendor' : 'customer';
 
   const [conversation, setConversation] = useState<ReturnType<typeof messaging.getOrCreateConversation> | null>(null);
-  const rawMessages = conversation && messaging ? messaging.getConversationMessages(conversation.id) : [];
-  const messages = rawMessages.filter(msg => msg && msg.id && msg.text);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
-    if (!messaging) return;
+    let isMounted = true;
+    
+    if (!messaging || !vendorId) return;
+    
     const conv = messaging.getOrCreateConversation(
-      vendorId || '',
+      vendorId,
       vendor?.name || 'Vendor',
       customerProfile?.id || 'guest',
       customerProfile?.name || 'Guest'
     );
-    setConversation(conv);
+    
+    if (isMounted) {
+      setConversation(conv);
+      
+      const rawMessages = messaging.getConversationMessages(conv.id);
+      const validMessages = rawMessages.filter((msg: Message | null | undefined) => 
+        msg && 
+        typeof msg === 'object' && 
+        msg.id && 
+        msg.text && 
+        typeof msg.text === 'string'
+      ) as Message[];
+      
+      setMessages(validMessages);
+    }
+    
+    return () => {
+      isMounted = false;
+    };
   }, [vendorId, vendor?.name, customerProfile?.id, customerProfile?.name, messaging]);
 
   useEffect(() => {
-    if (conversation?.id && messaging) {
+    let isMounted = true;
+    
+    if (conversation?.id && messaging && isMounted) {
       messaging.markConversationAsRead(conversation.id);
     }
+    
+    return () => {
+      isMounted = false;
+    };
   }, [conversation?.id, messaging]);
 
   useEffect(() => {
-    setTimeout(() => {
-      flatListRef.current?.scrollToEnd({ animated: true });
+    let isMounted = true;
+    const timeoutId = setTimeout(() => {
+      if (isMounted) {
+        flatListRef.current?.scrollToEnd({ animated: true });
+      }
     }, 100);
+    
+    return () => {
+      isMounted = false;
+      clearTimeout(timeoutId);
+    };
   }, [messages.length]);
 
   const handleSendMessage = () => {
@@ -117,7 +151,17 @@ export default function ChatScreen() {
       );
       setMessageText('');
       
-      setTimeout(() => {
+      const updatedMessages = messaging.getConversationMessages(conversation.id);
+      const validMessages = updatedMessages.filter((msg: Message | null | undefined) => 
+        msg && 
+        typeof msg === 'object' && 
+        msg.id && 
+        msg.text && 
+        typeof msg.text === 'string'
+      ) as Message[];
+      setMessages(validMessages);
+      
+      const autoReplyTimeout = setTimeout(() => {
         if (currentUserType === 'customer' && conversation?.id && messaging) {
           messaging.sendMessage(
             conversation.id,
@@ -126,8 +170,20 @@ export default function ChatScreen() {
             vendor?.name || 'Vendor',
             'vendor'
           );
+          
+          const refreshedMessages = messaging.getConversationMessages(conversation.id);
+          const validRefreshedMessages = refreshedMessages.filter((msg: Message | null | undefined) => 
+            msg && 
+            typeof msg === 'object' && 
+            msg.id && 
+            msg.text && 
+            typeof msg.text === 'string'
+          ) as Message[];
+          setMessages(validRefreshedMessages);
         }
       }, 1000);
+      
+      return () => clearTimeout(autoReplyTimeout);
     }
   };
 

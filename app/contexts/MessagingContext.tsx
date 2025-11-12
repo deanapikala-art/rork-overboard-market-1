@@ -45,24 +45,18 @@ export const [MessagingContext, useMessaging] = createContextHook(() => {
     return () => {
       isMounted = false;
     };
-  }, [loadMessagingData]);
+  }, []);
 
-  const loadMessagingData = useCallback(async () => {
-    let isMounted = true;
-    
+  const loadMessagingData = async () => {
     try {
       const stored = await AsyncStorage.getItem(STORAGE_KEY);
-      if (!isMounted) return;
       
       if (stored) {
         try {
           const data = JSON.parse(stored);
-          if (!isMounted) return;
           
           if (data && typeof data === 'object') {
-            if (isMounted) {
-              setConversations(Array.isArray(data.conversations) ? data.conversations : []);
-            }
+            setConversations(Array.isArray(data.conversations) ? data.conversations : []);
             
             const validMessages: Record<string, Message[]> = {};
             if (typeof data.messages === 'object' && data.messages !== null) {
@@ -79,32 +73,24 @@ export const [MessagingContext, useMessaging] = createContextHook(() => {
                 }
               });
             }
-            if (isMounted) {
-              setMessages(validMessages);
-            }
+            setMessages(validMessages);
           } else {
             console.warn('[Messaging] Invalid messaging data format, resetting');
             await AsyncStorage.removeItem(STORAGE_KEY);
           }
         } catch (parseError) {
-          if (!isMounted) return;
           console.error('[Messaging] Failed to parse messaging data:', parseError);
           await AsyncStorage.removeItem(STORAGE_KEY);
-          if (isMounted) {
-            setConversations([]);
-            setMessages({});
-          }
+          setConversations([]);
+          setMessages({});
         }
       }
     } catch (error) {
-      if (!isMounted) return;
       console.error('Failed to load messaging data:', error);
     } finally {
-      if (isMounted) {
-        setIsLoading(false);
-      }
+      setIsLoading(false);
     }
-  }, []);
+  };
 
   const saveMessagingData = async (
     newConversations: Conversation[],
