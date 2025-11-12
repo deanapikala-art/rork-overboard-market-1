@@ -53,6 +53,7 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
     active?: boolean;
     vendorId?: string;
   }): Promise<VendorSale[]> => {
+    let isMounted = true;
     try {
       setIsLoading(true);
       console.log('[VendorSalesContext] Fetching sales with filters:', filters);
@@ -77,6 +78,8 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
 
       const { data, error } = await query;
 
+      if (!isMounted) return [];
+
       if (error) {
         console.error('[VendorSalesContext] Error fetching sales:', error);
         return [];
@@ -88,7 +91,7 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
       console.error('[VendorSalesContext] Exception fetching sales:', error);
       return [];
     } finally {
-      setIsLoading(false);
+      if (isMounted) setIsLoading(false);
     }
   }, []);
 
@@ -98,6 +101,7 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
       return [];
     }
 
+    let isMounted = true;
     try {
       setIsLoading(true);
       console.log('[VendorSalesContext] Fetching my sales');
@@ -107,6 +111,8 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
         .select('*')
         .eq('vendor_id', vendorAuth.profile.id)
         .order('start_date', { ascending: false });
+
+      if (!isMounted) return [];
 
       if (error) {
         console.error('[VendorSalesContext] Error fetching my sales:', error);
@@ -119,7 +125,7 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
       console.error('[VendorSalesContext] Exception fetching my sales:', error);
       return [];
     } finally {
-      setIsLoading(false);
+      if (isMounted) setIsLoading(false);
     }
   }, [vendorAuth?.profile?.id]);
 
@@ -134,6 +140,7 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
       return { success: false, error: 'Not authenticated as vendor' };
     }
 
+    let isMounted = true;
     try {
       setIsLoading(true);
       console.log('[VendorSalesContext] Creating sale:', sale.title);
@@ -147,6 +154,8 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
         .select()
         .single();
 
+      if (!isMounted) return { success: false, error: 'Component unmounted' };
+
       if (error) {
         console.error('[VendorSalesContext] Error creating sale:', error);
         return { success: false, error: error.message };
@@ -158,7 +167,7 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
       console.error('[VendorSalesContext] Exception creating sale:', error);
       return { success: false, error: 'An unexpected error occurred' };
     } finally {
-      setIsLoading(false);
+      if (isMounted) setIsLoading(false);
     }
   }, [vendorAuth?.profile?.id]);
 
@@ -170,6 +179,7 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
       return { success: false, error: 'Not authenticated as vendor' };
     }
 
+    let isMounted = true;
     try {
       setIsLoading(true);
       console.log('[VendorSalesContext] Updating sale:', id);
@@ -179,6 +189,8 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
         .update(updates)
         .eq('id', id)
         .eq('vendor_id', vendorAuth.profile.id);
+
+      if (!isMounted) return { success: false, error: 'Component unmounted' };
 
       if (error) {
         console.error('[VendorSalesContext] Error updating sale:', error);
@@ -191,7 +203,7 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
       console.error('[VendorSalesContext] Exception updating sale:', error);
       return { success: false, error: 'An unexpected error occurred' };
     } finally {
-      setIsLoading(false);
+      if (isMounted) setIsLoading(false);
     }
   }, [vendorAuth?.profile?.id]);
 
@@ -202,6 +214,7 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
       return { success: false, error: 'Not authenticated as vendor' };
     }
 
+    let isMounted = true;
     try {
       setIsLoading(true);
       console.log('[VendorSalesContext] Deleting sale:', id);
@@ -211,6 +224,8 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
         .delete()
         .eq('id', id)
         .eq('vendor_id', vendorAuth.profile.id);
+
+      if (!isMounted) return { success: false, error: 'Component unmounted' };
 
       if (error) {
         console.error('[VendorSalesContext] Error deleting sale:', error);
@@ -223,7 +238,7 @@ export const [VendorSalesProvider, useVendorSales] = createContextHook<VendorSal
       console.error('[VendorSalesContext] Exception deleting sale:', error);
       return { success: false, error: 'An unexpected error occurred' };
     } finally {
-      setIsLoading(false);
+      if (isMounted) setIsLoading(false);
     }
   }, [vendorAuth?.profile?.id]);
 

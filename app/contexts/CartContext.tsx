@@ -58,6 +58,7 @@ const [CartProvider, useCart] = createContextHook<CartContextValue>(() => {
   const [customerZip, setCustomerZip] = useState<string | undefined>();
 
   const loadCart = useCallback(async () => {
+    let isMounted = true;
     try {
       if (isAuthenticated && user?.id) {
         console.log('[FairBag] Loading cart from database for user:', user.id);
@@ -66,6 +67,8 @@ const [CartProvider, useCart] = createContextHook<CartContextValue>(() => {
           .select('*')
           .eq('customer_id', user.id)
           .order('updated_at', { ascending: false });
+
+        if (!isMounted) return;
 
         if (error) {
           console.warn('[FairBag] Could not load from database:', error.message);
@@ -79,38 +82,45 @@ const [CartProvider, useCart] = createContextHook<CartContextValue>(() => {
             }));
             allItems.push(...cartItems);
           });
-          setItems(allItems);
+          if (isMounted) setItems(allItems);
           console.log('[FairBag] Loaded', allItems.length, 'items from database');
         }
       } else {
         const cartData = await AsyncStorage.getItem(FAIR_BAG_STORAGE_KEY);
+        if (!isMounted) return;
         if (cartData) {
           try {
             const parsed = JSON.parse(cartData);
             if (Array.isArray(parsed)) {
-              setItems(parsed);
+              if (isMounted) setItems(parsed);
               console.log('[FairBag] Loaded cart from AsyncStorage');
             } else {
               console.warn('[FairBag] Invalid cart data format, resetting');
               await AsyncStorage.removeItem(FAIR_BAG_STORAGE_KEY);
-              setItems([]);
+              if (isMounted) setItems([]);
             }
           } catch (parseError) {
             console.error('[FairBag] Failed to parse cart data:', parseError);
             await AsyncStorage.removeItem(FAIR_BAG_STORAGE_KEY);
-            setItems([]);
+            if (isMounted) setItems([]);
           }
         }
       }
     } catch (error) {
       console.error('[FairBag] Failed to load cart:', error instanceof Error ? error.message : JSON.stringify(error, null, 2));
     } finally {
-      setIsLoaded(true);
+      if (isMounted) setIsLoaded(true);
     }
+    return () => { isMounted = false; };
   }, [isAuthenticated, user]);
 
   useEffect(() => {
-    loadCart();
+    const cleanup = loadCart();
+    return () => {
+      if (cleanup && typeof cleanup === 'function') {
+        cleanup();
+      }
+    };
   }, [loadCart]);
 
   const saveCart = useCallback(async () => {

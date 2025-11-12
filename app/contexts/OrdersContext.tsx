@@ -106,6 +106,7 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
       return;
     }
 
+    let isMounted = true;
     setIsLoading(true);
     try {
       console.log('[Orders] Loading customer orders for user:', user.id);
@@ -115,6 +116,8 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
         .eq('customer_id', user.id)
         .order('created_at', { ascending: false });
 
+      if (!isMounted) return;
+
       if (error) {
         console.error('[Orders] Error loading customer orders:', JSON.stringify(error, null, 2));
         setCustomerOrders([]);
@@ -123,11 +126,13 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
         setCustomerOrders(data as Order[] || []);
       }
     } catch (error) {
+      if (!isMounted) return;
       console.error('[Orders] Exception loading customer orders:', error instanceof Error ? error.message : JSON.stringify(error));
       setCustomerOrders([]);
     } finally {
-      setIsLoading(false);
+      if (isMounted) setIsLoading(false);
     }
+    return () => { isMounted = false; };
   }, [isAuthenticated, user]);
 
   const loadVendorOrders = useCallback(async () => {
@@ -137,6 +142,7 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
       return;
     }
 
+    let isMounted = true;
     setIsLoadingVendorOrders(true);
     try {
       console.log('[Orders] Loading vendor orders');
@@ -144,6 +150,8 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
         .from('user_orders')
         .select('*')
         .order('created_at', { ascending: false });
+
+      if (!isMounted) return;
 
       if (error) {
         console.error('[Orders] Error loading vendor orders:', JSON.stringify(error, null, 2));
@@ -153,15 +161,22 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
         setVendorOrders(data as Order[] || []);
       }
     } catch (error) {
+      if (!isMounted) return;
       console.error('[Orders] Exception loading vendor orders:', error instanceof Error ? error.message : JSON.stringify(error));
       setVendorOrders([]);
     } finally {
-      setIsLoadingVendorOrders(false);
+      if (isMounted) setIsLoadingVendorOrders(false);
     }
+    return () => { isMounted = false; };
   }, [isAuthenticated, user]);
 
   useEffect(() => {
-    loadCustomerOrders();
+    const cleanup = loadCustomerOrders();
+    return () => {
+      if (cleanup && typeof cleanup === 'function') {
+        cleanup();
+      }
+    };
   }, [loadCustomerOrders]);
 
   const createOrder = useCallback(async (params: CreateOrderParams): Promise<Order | null> => {
