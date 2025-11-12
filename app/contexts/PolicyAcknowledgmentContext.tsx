@@ -106,7 +106,8 @@ export const [PolicyAcknowledgmentProvider, usePolicyAcknowledgment] = createCon
         .order('version', { ascending: false });
 
       if (error) {
-        console.error('[PolicyAcknowledgment] Error loading policies:', error);
+        console.error('[PolicyAcknowledgment] Error loading policies:', JSON.stringify(error, null, 2));
+        setCurrentPolicies([]);
         return;
       }
 
@@ -138,7 +139,8 @@ export const [PolicyAcknowledgmentProvider, usePolicyAcknowledgment] = createCon
         .eq('user_id', userId);
 
       if (error) {
-        console.error('[PolicyAcknowledgment] Error loading acknowledgments:', error);
+        console.error('[PolicyAcknowledgment] Error loading acknowledgments:', JSON.stringify(error, null, 2));
+        setUserAcknowledgments([]);
         return;
       }
 
@@ -165,7 +167,8 @@ export const [PolicyAcknowledgmentProvider, usePolicyAcknowledgment] = createCon
         .order('created_at', { ascending: false });
 
       if (error) {
-        console.error('[PolicyAcknowledgment] Error loading notifications:', error);
+        console.error('[PolicyAcknowledgment] Error loading notifications:', JSON.stringify(error, null, 2));
+        setPendingNotifications([]);
         return;
       }
 

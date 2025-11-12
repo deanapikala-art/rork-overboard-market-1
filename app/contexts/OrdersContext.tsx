@@ -116,6 +116,11 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
         .eq('customer_id', user.id)
         .order('created_at', { ascending: false });
 
+      console.log('[DeliveryTracking] Loaded orders:', data?.length || 0);
+      if (error) {
+        console.error('[DeliveryTracking] Error fetching orders:', JSON.stringify(error, null, 2));
+      }
+
       if (!isMounted) return;
 
       if (error) {

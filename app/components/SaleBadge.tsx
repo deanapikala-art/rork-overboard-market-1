@@ -152,11 +152,11 @@ const styles = StyleSheet.create({
   },
   originalPrice: {
     fontWeight: '600' as const,
-    color: Colors.light.tabIconDefault,
+    color: Colors?.light?.tabIconDefault ?? '#6A6F73',
     textDecorationLine: 'line-through',
   },
   regularPrice: {
     fontWeight: '700' as const,
-    color: Colors.light.text,
+    color: Colors?.light?.text ?? '#2B3440',
   },
 });
