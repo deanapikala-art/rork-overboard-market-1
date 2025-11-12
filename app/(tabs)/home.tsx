@@ -14,14 +14,14 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { events } from '@/mocks/events';
-import { featuredSections } from '@/constants/featuredSections';
+import { featuredSections } from '@/app/constants/featuredSections';
 import { getFeaturedSpotlights } from '@/mocks/vendorSpotlights';
 import { vendors } from '@/mocks/vendors';
-import { useCustomerAuth } from '@/contexts/CustomerAuthContext';
-import HamburgerMenu from '@/components/HamburgerMenu';
-import responsive from '@/constants/responsive';
+import { useCustomerAuth } from '@/app/contexts/CustomerAuthContext';
+import HamburgerMenu from '@/app/components/HamburgerMenu';
+import responsive from '@/app/constants/responsive';
 
 interface FeatureBanner {
   id: string;
