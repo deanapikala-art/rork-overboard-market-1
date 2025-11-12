@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { FileText, Users, CheckCircle, Clock, RefreshCw } from 'lucide-react-native';
 import { supabase } from '@/lib/supabase';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { PolicyType } from '@/app/contexts/PolicyAcknowledgmentContext';
 
 interface PolicyStats {
