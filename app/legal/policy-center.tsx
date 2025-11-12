@@ -12,7 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack, router, useLocalSearchParams } from 'expo-router';
 import { Shield, FileText, Users, ChevronDown, ChevronUp, CheckCircle, LogOut } from 'lucide-react-native';
 import Colors from '@/app/constants/colors';
-import { usePolicyAcknowledgment, PolicyType } from '@app/contexts/PolicyAcknowledgmentContext';
+import { usePolicyAcknowledgment, PolicyType } from '@/contexts/PolicyAcknowledgmentContext';
 import { supabase } from '@/lib/supabase';
 
 type PolicyTab = 'privacy' | 'terms' | 'conduct' | 'safety';
@@ -547,7 +547,7 @@ export default function PolicyCenterScreen() {
                   disabled={isAcknowledging}
                   activeOpacity={0.7}
                 >
-                  <LogOut size={20} color={Colors.error} />
+                  <LogOut size={20} color={Colors.light.sunsetCoral} />
                   <Text style={styles.declineButtonText}>Decline / Log Out</Text>
                 </TouchableOpacity>
               </View>
@@ -759,12 +759,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: Colors.error,
+    borderColor: Colors.light.sunsetCoral,
   },
   declineButtonText: {
     fontSize: 16,
     fontWeight: '700' as const,
-    color: Colors.error,
+    color: Colors.light.sunsetCoral,
   },
   acknowledgmentNote: {
     fontSize: 12,
