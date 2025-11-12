@@ -30,8 +30,7 @@ export default function ChatScreen() {
   const [warningAction, setWarningAction] = useState<(() => void) | null>(null);
   const flatListRef = useRef<FlatList>(null);
   
-  const { getOrCreateConversation, sendMessage, getConversationMessages, markConversationAsRead } =
-    useMessaging();
+  const messaging = useMessaging();
   const { profile: customerProfile } = useCustomerAuth();
   const { profile: vendorProfile } = useVendorAuth();
   const { checkMessage, flagMessage } = useSafetyFilters();
@@ -43,24 +42,25 @@ export default function ChatScreen() {
   const currentUserName = isVendorView ? vendorProfile.business_name : customerProfile?.name || 'Guest';
   const currentUserType = isVendorView ? 'vendor' : 'customer';
 
-  const [conversation, setConversation] = useState<ReturnType<typeof getOrCreateConversation> | null>(null);
-  const messages = conversation ? getConversationMessages(conversation.id) : [];
+  const [conversation, setConversation] = useState<ReturnType<typeof messaging.getOrCreateConversation> | null>(null);
+  const messages = conversation && messaging ? messaging.getConversationMessages(conversation.id) : [];
 
   useEffect(() => {
-    const conv = getOrCreateConversation(
+    if (!messaging) return;
+    const conv = messaging.getOrCreateConversation(
       vendorId || '',
       vendor?.name || 'Vendor',
       customerProfile?.id || 'guest',
       customerProfile?.name || 'Guest'
     );
     setConversation(conv);
-  }, [vendorId, vendor?.name, customerProfile?.id, customerProfile?.name, getOrCreateConversation]);
+  }, [vendorId, vendor?.name, customerProfile?.id, customerProfile?.name, messaging]);
 
   useEffect(() => {
-    if (conversation?.id) {
-      markConversationAsRead(conversation.id);
+    if (conversation?.id && messaging) {
+      messaging.markConversationAsRead(conversation.id);
     }
-  }, [conversation?.id, markConversationAsRead]);
+  }, [conversation?.id, messaging]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -106,8 +106,8 @@ export default function ChatScreen() {
   };
   
   const sendMessageInternal = (text: string) => {
-    if (conversation?.id) {
-      sendMessage(
+    if (conversation?.id && messaging) {
+      messaging.sendMessage(
         conversation.id,
         text,
         currentUserId,
@@ -117,8 +117,8 @@ export default function ChatScreen() {
       setMessageText('');
       
       setTimeout(() => {
-        if (currentUserType === 'customer' && conversation?.id) {
-          sendMessage(
+        if (currentUserType === 'customer' && conversation?.id && messaging) {
+          messaging.sendMessage(
             conversation.id,
             'Thanks for your message! I\'ll get back to you soon.',
             vendorId || '',
