@@ -7,8 +7,8 @@ import Colors from '@/app/constants/colors';
 import { useCart } from '@/app/contexts/CartContext';
 
 export default function TabLayout() {
-  const { getCartItemCount } = useCart();
-  const cartItemCount = getCartItemCount();
+  const { getCartItemCount, isLoaded } = useCart();
+  const cartItemCount = isLoaded ? getCartItemCount() : 0;
 
   return (
     <Tabs
