@@ -1,15 +1,19 @@
-// Default export for web
-// This file provides the web-compatible version
-import React, { useState, useEffect } from 'react';
+// Native-only version for iOS/Android
+// Uses react-native-maps which is not available on web
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
+  Alert,
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
 import { MapPin, Navigation, RotateCcw, ExternalLink } from 'lucide-react-native';
+import MapView, { Marker, Circle } from 'react-native-maps';
+import * as Location from 'expo-location';
+import * as Linking from 'expo-linking';
 import Colors from '@/app/constants/colors';
 
 interface PickupMapPickerProps {
@@ -20,6 +24,14 @@ interface PickupMapPickerProps {
   onLocationChange?: (lat: number, lon: number) => void;
 }
 
+type Region = {
+  latitude: number;
+  longitude: number;
+  latitudeDelta: number;
+  longitudeDelta: number;
+};
+
+const MILES_TO_METERS = 1609.34;
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const MAP_HEIGHT = Math.min(SCREEN_WIDTH * 0.8, 400);
 
@@ -30,46 +42,53 @@ export function PickupMapPicker({
   pickupRadiusMiles,
   onLocationChange,
 }: PickupMapPickerProps) {
+  const mapRef = useRef<any>(null);
+  const [region, setRegion] = useState<Region | null>(null);
   const [markerCoordinate, setMarkerCoordinate] = useState<{ latitude: number; longitude: number } | null>(null);
   const [isLoadingLocation, setIsLoadingLocation] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
   const geocodeZip = async (zip: string) => {
     try {
       const coords = await getCoordinatesFromZip(zip);
       if (coords) {
+        const newRegion = {
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+          latitudeDelta: 0.1,
+          longitudeDelta: 0.1,
+        };
+        setRegion(newRegion);
         setMarkerCoordinate(coords);
         onLocationChange?.(coords.latitude, coords.longitude);
       }
     } catch (error) {
       console.error('[PickupMapPicker] Error geocoding ZIP:', error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     if (pickupGeoLat && pickupGeoLon) {
+      const initialRegion = {
+        latitude: pickupGeoLat,
+        longitude: pickupGeoLon,
+        latitudeDelta: 0.1,
+        longitudeDelta: 0.1,
+      };
+      setRegion(initialRegion);
       setMarkerCoordinate({ latitude: pickupGeoLat, longitude: pickupGeoLon });
-      setIsLoading(false);
     } else if (pickupOriginZip && pickupOriginZip.length === 5) {
       geocodeZip(pickupOriginZip);
-    } else {
-      setIsLoading(false);
     }
   }, [pickupOriginZip, pickupGeoLat, pickupGeoLon]);
 
   const getCoordinatesFromZip = async (zip: string): Promise<{ latitude: number; longitude: number } | null> => {
     try {
-      const response = await fetch(`https://api.zippopotam.us/us/${zip}`);
-      if (response.ok) {
-        const data = await response.json();
-        if (data.places && data.places.length > 0) {
-          return {
-            latitude: parseFloat(data.places[0].latitude),
-            longitude: parseFloat(data.places[0].longitude),
-          };
-        }
+      const results = await Location.geocodeAsync(`${zip}, USA`);
+      if (results && results.length > 0) {
+        return {
+          latitude: results[0].latitude,
+          longitude: results[0].longitude,
+        };
       }
     } catch (error) {
       console.error('[PickupMapPicker] Geocoding error:', error);
@@ -77,37 +96,51 @@ export function PickupMapPicker({
     return null;
   };
 
+  const handleMapPress = (e: any) => {
+    const { latitude, longitude } = e.nativeEvent.coordinate;
+    const roundedLat = Math.round(latitude * 1000) / 1000;
+    const roundedLon = Math.round(longitude * 1000) / 1000;
+    
+    setMarkerCoordinate({ latitude: roundedLat, longitude: roundedLon });
+    onLocationChange?.(roundedLat, roundedLon);
+  };
+
   const handleUseMyLocation = async () => {
     setIsLoadingLocation(true);
     try {
-      if (!navigator.geolocation) {
-        alert('Geolocation is not supported by your browser.');
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      
+      if (status !== 'granted') {
+        Alert.alert(
+          'Permission Required',
+          'Location permission is required to use this feature.',
+          [{ text: 'OK' }]
+        );
         return;
       }
 
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const roundedLat = Math.round(position.coords.latitude * 1000) / 1000;
-          const roundedLon = Math.round(position.coords.longitude * 1000) / 1000;
+      const location = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Balanced,
+      });
 
-          setMarkerCoordinate({ latitude: roundedLat, longitude: roundedLon });
-          onLocationChange?.(roundedLat, roundedLon);
-          setIsLoadingLocation(false);
-        },
-        (error) => {
-          console.error('[PickupMapPicker] Error getting location:', error);
-          alert('Failed to get your location. Please enable location services and try again.');
-          setIsLoadingLocation(false);
-        },
-        {
-          enableHighAccuracy: false,
-          timeout: 10000,
-          maximumAge: 0,
-        }
-      );
+      const roundedLat = Math.round(location.coords.latitude * 1000) / 1000;
+      const roundedLon = Math.round(location.coords.longitude * 1000) / 1000;
+
+      const newRegion = {
+        latitude: roundedLat,
+        longitude: roundedLon,
+        latitudeDelta: 0.05,
+        longitudeDelta: 0.05,
+      };
+
+      setRegion(newRegion);
+      setMarkerCoordinate({ latitude: roundedLat, longitude: roundedLon });
+      mapRef.current?.animateToRegion(newRegion, 500);
+      onLocationChange?.(roundedLat, roundedLon);
     } catch (error) {
       console.error('[PickupMapPicker] Error getting location:', error);
-      alert('Failed to get your location. Please try again.');
+      Alert.alert('Error', 'Failed to get your location. Please try again.');
+    } finally {
       setIsLoadingLocation(false);
     }
   };
@@ -121,11 +154,11 @@ export function PickupMapPicker({
   const openInGoogleMaps = () => {
     if (markerCoordinate) {
       const url = `https://www.google.com/maps/search/?api=1&query=${markerCoordinate.latitude},${markerCoordinate.longitude}`;
-      window.open(url, '_blank');
+      Linking.openURL(url);
     }
   };
 
-  if (isLoading) {
+  if (!region) {
     return (
       <View style={[styles.container, styles.loadingContainer]}>
         <ActivityIndicator size="large" color={Colors.nautical.teal} />
@@ -142,22 +175,36 @@ export function PickupMapPicker({
       </View>
       
       <Text style={styles.mapDescription}>
-        Set your pickup area. For privacy, your location is rounded to approximately 0.6 mile accuracy.
+        Tap on the map to set your pickup area. For privacy, your location is rounded to approximately 0.6 mile accuracy.
       </Text>
 
       <View style={styles.mapContainer}>
-        <View style={styles.webMapPlaceholder}>
-          <MapPin size={48} color={Colors.nautical.teal} />
-          <Text style={styles.webMapText}>Map Preview</Text>
-          <Text style={styles.webMapSubtext}>
-            {markerCoordinate 
-              ? `Selected: ${markerCoordinate.latitude.toFixed(3)}, ${markerCoordinate.longitude.toFixed(3)}`
-              : 'No location selected'}
-          </Text>
-          <Text style={styles.webMapNote}>
-            Map picker available on mobile app
-          </Text>
-        </View>
+        <MapView
+          ref={mapRef}
+          style={styles.map}
+          region={region}
+          onPress={handleMapPress}
+          showsUserLocation
+          showsMyLocationButton={false}
+        >
+          {markerCoordinate && (
+            <>
+              <Marker
+                coordinate={markerCoordinate}
+                title="Pickup Location"
+                description="Approximate pickup area"
+                pinColor={Colors.nautical.teal}
+              />
+              <Circle
+                center={markerCoordinate}
+                radius={pickupRadiusMiles * MILES_TO_METERS}
+                strokeColor={Colors.nautical.teal}
+                fillColor="rgba(0, 128, 128, 0.1)"
+                strokeWidth={2}
+              />
+            </>
+          )}
+        </MapView>
       </View>
 
       <View style={styles.controls}>
@@ -256,31 +303,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: Colors.nautical.teal,
   },
-  webMapPlaceholder: {
+  map: {
     width: '100%',
     height: '100%',
-    backgroundColor: Colors.nautical.sandLight,
-    justifyContent: 'center' as const,
-    alignItems: 'center' as const,
-    gap: 8,
-  },
-  webMapText: {
-    fontSize: 16,
-    fontWeight: '700' as const,
-    color: Colors.light.text,
-  },
-  webMapSubtext: {
-    fontSize: 13,
-    color: Colors.light.muted,
-    textAlign: 'center' as const,
-    paddingHorizontal: 20,
-  },
-  webMapNote: {
-    fontSize: 12,
-    color: Colors.nautical.teal,
-    textAlign: 'center' as const,
-    marginTop: 8,
-    fontWeight: '600' as const,
   },
   controls: {
     marginTop: 12,
@@ -341,7 +366,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700' as const,
     color: Colors.nautical.teal,
-    fontFamily: 'Courier',
+    fontFamily: 'monospace',
   },
   coordinatesNote: {
     fontSize: 12,
