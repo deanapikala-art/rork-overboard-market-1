@@ -8,8 +8,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import ArrangePickupModal from '@/components/ArrangePickupModal';
 import VendorShoutoutsSection from '@/components/VendorShoutoutsSection';
-import { useFavorites } from '@/contexts/FavoritesContext';
-import Colors from '@/constants/colors';
+import { useFavorites } from '@app/contexts/FavoritesContext';
+import Colors from '@/app/constants/colors';
 import { products } from '@/mocks/products';
 import { vendors } from '@/mocks/vendors';
 import { logAnalyticsEvent } from '@/mocks/analytics';

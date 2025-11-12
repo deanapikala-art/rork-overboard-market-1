@@ -15,7 +15,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { vendors } from '@/mocks/vendors';
 import { eventVendors } from '@/mocks/eventVendors';
 import { useEventGuard } from '@/app/hooks/useEventGuard';

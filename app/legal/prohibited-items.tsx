@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import Colors from '@/constants/colors';
-import { PROHIBITED_ITEMS } from '@/constants/legal';
+import Colors from '@/app/constants/colors';
+import { PROHIBITED_ITEMS } from '@/app/constants/legal';
 
 export default function ProhibitedItemsScreen() {
   const insets = useSafeAreaInsets();

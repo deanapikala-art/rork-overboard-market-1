@@ -15,7 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack, useRouter } from 'expo-router';
 import { Truck, Package, MapPin, Clock, Save, CheckCircle, Shield } from 'lucide-react-native';
 import { useVendorAuth } from './contexts/VendorAuthContext';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import PickupSafetyTipsModal from './components/PickupSafetyTipsModal';

@@ -9,7 +9,7 @@ import {
   Switch,
 } from 'react-native';
 import { X, Bell, Mail, Smartphone, Settings as SettingsIcon } from 'lucide-react-native';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { useAdminNotifications, AdminPreference } from '@/app/contexts/AdminNotificationsContext';
 
 interface NotificationPreferencesModalProps {

@@ -34,7 +34,7 @@ import {
   Volume2,
   VolumeX,
 } from 'lucide-react-native';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { useVendorLive } from '@/app/contexts/VendorLiveContext';
 import { products } from '@/mocks/products';
 

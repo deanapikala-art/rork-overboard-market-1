@@ -14,7 +14,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { vendors } from '@/mocks/vendors';
 import { LocalShoppingToolbar } from '@/app/components/LocalShoppingToolbar';
 import { geocodeZipCode, haversineDistance } from '@/app/utils/geolocation';

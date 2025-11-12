@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import Colors from '@/constants/colors';
-import { CUSTOMER_TERMS } from '@/constants/legal';
+import Colors from '@/app/constants/colors';
+import { CUSTOMER_TERMS } from '@/app/constants/legal';
 
 export default function CustomerTermsScreen() {
   const insets = useSafeAreaInsets();

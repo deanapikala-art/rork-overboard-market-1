@@ -17,7 +17,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 import * as ImagePicker from 'expo-image-picker';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { useShoutouts } from '@/app/contexts/ShoutoutsContext';
 import { useCustomerAuth } from '@/app/contexts/CustomerAuthContext';
 

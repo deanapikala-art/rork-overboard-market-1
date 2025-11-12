@@ -12,7 +12,7 @@ import { Stack, router } from 'expo-router';
 import { ArrowLeft, Tag, Search, Percent, Gift, ChevronRight } from 'lucide-react-native';
 import { useVendorSales, VendorSale } from '@/app/contexts/VendorSalesContext';
 import { supabase } from '@/lib/supabase';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface VendorInfo {

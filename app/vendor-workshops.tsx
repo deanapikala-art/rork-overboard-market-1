@@ -23,7 +23,7 @@ import {
   Trash2,
   Clock,
 } from 'lucide-react-native';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { useWorkshops, Workshop, WorkshopType, WorkshopStatus } from '@/app/contexts/WorkshopsContext';
 import { useVendorAuth } from '@/app/contexts/VendorAuthContext';
 import DateTimePicker from '@react-native-community/datetimepicker';

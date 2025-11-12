@@ -10,7 +10,7 @@ import {
   Dimensions,
 } from 'react-native';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { useShoutouts } from '@/app/contexts/ShoutoutsContext';
 import { useCustomerAuth } from '@/app/contexts/CustomerAuthContext';
 import PostShoutoutModal from './PostShoutoutModal';

@@ -29,8 +29,8 @@ The following contexts are imported but **do not exist**:
 
 | File | Missing Context | Import Path |
 |------|----------------|-------------|
-| `app/vendor-workshops.tsx` | WorkshopsContext | `@/contexts/WorkshopsContext` |
-| `app/workshops.tsx` | WorkshopsContext | `@/contexts/WorkshopsContext` |
+| `app/vendor-workshops.tsx` | WorkshopsContext | `@app/contexts/WorkshopsContext` |
+| `app/workshops.tsx` | WorkshopsContext | `@app/contexts/WorkshopsContext` |
 | `app/vendor-sales.tsx` | VendorSalesContext | `@/app/contexts/VendorSalesContext` |
 | `app/sales.tsx` | VendorSalesContext | `@/app/contexts/VendorSalesContext` |
 

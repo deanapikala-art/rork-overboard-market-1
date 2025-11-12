@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import Colors from '@/constants/colors';
-import { REFUND_DISPUTE_POLICY } from '@/constants/legal';
+import Colors from '@/app/constants/colors';
+import { REFUND_DISPUTE_POLICY } from '@/app/constants/legal';
 
 export default function RefundPolicyScreen() {
   const insets = useSafeAreaInsets();

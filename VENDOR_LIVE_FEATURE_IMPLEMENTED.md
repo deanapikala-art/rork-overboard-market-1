@@ -221,7 +221,7 @@ This ensures all clients see updates instantly when vendors go live or offline.
 
 ## 🎨 Design Tokens Used
 
-Colors from `@/constants/colors`:
+Colors from `@/app/constants/colors`:
 - `Colors.nautical.teal` - Primary action color
 - `Colors.nautical.sandLight` - Active state backgrounds
 - `Colors.light.terracotta` - End Live / Error states

@@ -19,7 +19,7 @@ import {
   Clock,
   DollarSign,
 } from 'lucide-react-native';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { useWorkshops, Workshop } from '@/app/contexts/WorkshopsContext';
 import { useCustomerAuth } from '@/app/contexts/CustomerAuthContext';
 

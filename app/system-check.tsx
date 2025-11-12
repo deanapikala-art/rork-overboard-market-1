@@ -10,7 +10,7 @@ import {
 import { Stack } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CheckCircle, XCircle, AlertCircle, RefreshCw } from 'lucide-react-native';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { supabase } from '@/lib/supabase';
 import { trpcClient } from '@/lib/trpc';
 import Constants from 'expo-constants';

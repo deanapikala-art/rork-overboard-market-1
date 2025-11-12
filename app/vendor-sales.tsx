@@ -14,7 +14,7 @@ import { Stack, router } from 'expo-router';
 import { ArrowLeft, Plus, Calendar, Tag, Percent, Gift, Edit, Trash2 } from 'lucide-react-native';
 import { useVendorSales, VendorSale, DiscountType, AppliesToScope } from '@/app/contexts/VendorSalesContext';
 import { useVendorAuth } from '@/app/contexts/VendorAuthContext';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function VendorSalesScreen() {

@@ -102,8 +102,8 @@ import { appRouter } from '@/backend/trpc/app-router';
 ### ❌ Incorrect Import Patterns
 ```typescript
 // Missing 'app/' prefix
-import Colors from '@/constants/colors'; // ❌
-import { useCart } from '@/contexts/CartContext'; // ❌
+import Colors from '@/app/constants/colors'; // ❌
+import { useCart } from '@app/contexts/CartContext'; // ❌
 
 // Relative imports (should use alias)
 import Colors from '../../constants/colors'; // ❌

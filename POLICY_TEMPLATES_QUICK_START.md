@@ -33,7 +33,7 @@ Add the `GlobalPolicyBanner` component to your app layout:
 
 **File: `app/_layout.tsx`**
 ```typescript
-import { PolicyAcknowledgmentProvider } from '@/contexts/PolicyAcknowledgmentContext';
+import { PolicyAcknowledgmentProvider } from '@app/contexts/PolicyAcknowledgmentContext';
 import { GlobalPolicyBanner } from '@/components/PolicyBanner';
 
 export default function RootLayout() {

@@ -38,7 +38,7 @@ if (Platform.OS !== 'web') {
   ResizeMode = expoAv.ResizeMode;
 }
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { useVendorAuth, VendorProfile } from '@/app/contexts/VendorAuthContext';
 
 interface ProductVariant {

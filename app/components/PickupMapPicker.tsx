@@ -11,7 +11,7 @@ import {
 import { MapPin, Navigation, RotateCcw, ExternalLink } from 'lucide-react-native';
 import * as Location from 'expo-location';
 import * as Linking from 'expo-linking';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import MapView, { Marker, Circle } from 'react-native-maps';
 
 interface PickupMapPickerProps {

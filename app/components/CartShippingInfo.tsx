@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Switch } from 'react-native';
 import { Truck, MapPin, ChevronDown, ChevronUp, AlertCircle } from 'lucide-react-native';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 
 interface ShippingSettings {
   flatPerItem?: number;

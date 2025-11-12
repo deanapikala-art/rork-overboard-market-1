@@ -25,7 +25,7 @@ import {
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { useOrders } from '@/app/contexts/OrdersContext';
 import { useResponsive } from '@/app/hooks/useResponsive';
 

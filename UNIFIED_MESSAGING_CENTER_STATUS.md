@@ -78,7 +78,7 @@ import { MessagingCenterProvider } from './contexts/MessagingCenterContext';
 #### Order Details Page (`app/order/[id].tsx`)
 Add "Message Vendor" button that:
 ```tsx
-import { useMessagingCenter } from '@/contexts/MessagingCenterContext';
+import { useMessagingCenter } from '@app/contexts/MessagingCenterContext';
 
 const { createOrOpenConversation } = useMessagingCenter();
 
@@ -160,7 +160,7 @@ Create modal/bottom sheet for vendors to select from canned replies:
 ## Usage Example
 
 ```tsx
-import { useMessagingCenter } from '@/contexts/MessagingCenterContext';
+import { useMessagingCenter } from '@app/contexts/MessagingCenterContext';
 
 function MyComponent() {
   const {

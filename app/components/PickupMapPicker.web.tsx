@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { MapPin, Navigation, RotateCcw, ExternalLink } from 'lucide-react-native';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 
 interface PickupMapPickerProps {
   pickupOriginZip: string;

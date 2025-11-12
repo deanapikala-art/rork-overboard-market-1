@@ -8,7 +8,7 @@ import {
   Clock,
   MapPin,
 } from 'lucide-react-native';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 
 interface ShippingStatusCardProps {
   shippingStatus:

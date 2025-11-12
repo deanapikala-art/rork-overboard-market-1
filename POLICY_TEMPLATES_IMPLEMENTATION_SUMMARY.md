@@ -353,7 +353,7 @@ Ready to implement when needed:
 - Full Screen: `app/admin-policy-management.tsx`
 
 **Context:**
-- Provider: `PolicyAcknowledgmentProvider` from `@/contexts/PolicyAcknowledgmentContext`
+- Provider: `PolicyAcknowledgmentProvider` from `@app/contexts/PolicyAcknowledgmentContext`
 - Hook: `usePolicyAcknowledgment()`
 
 ---

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking, Platform, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { events } from '@/mocks/events';
 import { vendors } from '@/mocks/vendors';
 import { CAL } from '@/app/utils/calendar';

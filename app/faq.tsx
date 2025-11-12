@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 
 interface FAQItem {
   question: string;

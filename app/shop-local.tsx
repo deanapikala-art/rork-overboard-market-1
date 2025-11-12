@@ -14,8 +14,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'expo-image';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import Colors from '@/constants/colors';
-import { US_STATES, US_REGIONS, State } from '@/constants/states';
+import Colors from '@/app/constants/colors';
+import { US_STATES, US_REGIONS, State } from '@/app/constants/states';
 import { vendors, Vendor } from '@/mocks/vendors';
 import { events, Event } from '@/mocks/events';
 
