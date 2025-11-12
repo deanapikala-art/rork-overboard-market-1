@@ -16,7 +16,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 
 export default function VendorApplicationPage() {
   const insets = useSafeAreaInsets();

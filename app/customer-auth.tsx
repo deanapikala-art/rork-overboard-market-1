@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 
 export default function CustomerAuthScreen() {
   const [isSignUp, setIsSignUp] = useState(true);

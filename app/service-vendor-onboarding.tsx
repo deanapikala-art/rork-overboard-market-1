@@ -31,7 +31,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { useVendorAuth } from '@/app/contexts/VendorAuthContext';
 import {
   ALL_SERVICE_CATEGORIES,
@@ -41,7 +41,7 @@ import {
   VendorType,
   ServiceAreaType,
   PricingModel,
-} from '@/constants/serviceCategories';
+} from '@/app/constants/serviceCategories';
 
 type StepType = 'profile' | 'type' | 'pricing' | 'booking' | 'portfolio' | 'policies';
 

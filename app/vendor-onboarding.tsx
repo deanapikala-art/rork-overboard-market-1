@@ -41,7 +41,7 @@ import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { useVendorAuth } from '@/app/contexts/VendorAuthContext';
 
 type StepType = 'booth' | 'payments' | 'location' | 'product' | 'goLive';
