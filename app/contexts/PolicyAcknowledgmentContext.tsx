@@ -99,11 +99,28 @@ export const [PolicyAcknowledgmentProvider, usePolicyAcknowledgment] = createCon
   const loadCurrentPolicies = useCallback(async () => {
     try {
       console.log('[PolicyAcknowledgment] Loading current policies');
-      const { data, error } = await supabase
+      
+      const { data: tableInfo } = await supabase
         .from('policy_texts')
         .select('*')
-        .eq('is_active', true)
-        .order('version', { ascending: false });
+        .limit(1);
+
+      const hasVersionColumn = tableInfo && tableInfo.length > 0 && 'version' in tableInfo[0];
+      const hasIsActiveColumn = tableInfo && tableInfo.length > 0 && 'is_active' in tableInfo[0];
+
+      let query = supabase.from('policy_texts').select('*');
+      
+      if (hasIsActiveColumn) {
+        query = query.eq('is_active', true);
+      }
+      
+      if (hasVersionColumn) {
+        query = query.order('version', { ascending: false });
+      } else {
+        query = query.order('created_at', { ascending: false });
+      }
+
+      const { data, error } = await query;
 
       if (error) {
         console.error('[PolicyAcknowledgment] Error loading policies:', JSON.stringify(error, null, 2));
@@ -111,17 +128,24 @@ export const [PolicyAcknowledgmentProvider, usePolicyAcknowledgment] = createCon
         return;
       }
 
-      const uniquePolicies = data?.reduce((acc: PolicyText[], policy) => {
+      const policies = (data || []).map((policy: any) => ({
+        ...policy,
+        version: policy.version ?? 1,
+        is_active: policy.is_active ?? true,
+      })) as PolicyText[];
+
+      const uniquePolicies = policies.reduce((acc: PolicyText[], policy) => {
         if (!acc.find(p => p.policy_type === policy.policy_type)) {
-          acc.push(policy as PolicyText);
+          acc.push(policy);
         }
         return acc;
-      }, []) || [];
+      }, []);
 
       setCurrentPolicies(uniquePolicies);
       console.log('[PolicyAcknowledgment] Loaded', uniquePolicies.length, 'current policies');
     } catch (error) {
       console.error('[PolicyAcknowledgment] Exception loading policies:', error);
+      setCurrentPolicies([]);
     }
   }, []);
 
