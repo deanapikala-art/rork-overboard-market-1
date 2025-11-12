@@ -100,7 +100,7 @@ export default function MessageThreadScreen() {
   };
 
   const renderMessage = ({ item }: { item: Message }) => {
-    if (!item || !item.body) {
+    if (!item || item.body === undefined || item.body === null) {
       return null;
     }
 

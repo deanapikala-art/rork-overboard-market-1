@@ -67,7 +67,8 @@ export const [MessagingContext, useMessaging] = createContextHook(() => {
                     msg && 
                     typeof msg === 'object' && 
                     msg.id && 
-                    msg.text && 
+                    msg.text !== undefined &&
+                    msg.text !== null && 
                     typeof msg.text === 'string'
                   );
                 }

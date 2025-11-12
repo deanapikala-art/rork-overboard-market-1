@@ -65,7 +65,8 @@ export default function ChatScreen() {
         msg && 
         typeof msg === 'object' && 
         msg.id && 
-        msg.text && 
+        msg.text !== undefined &&
+        msg.text !== null && 
         typeof msg.text === 'string'
       ) as Message[];
       
@@ -141,6 +142,8 @@ export default function ChatScreen() {
   };
   
   const sendMessageInternal = (text: string) => {
+    let isMounted = true;
+    
     if (conversation?.id && messaging) {
       messaging.sendMessage(
         conversation.id,
@@ -156,13 +159,14 @@ export default function ChatScreen() {
         msg && 
         typeof msg === 'object' && 
         msg.id && 
-        msg.text && 
+        msg.text !== undefined &&
+        msg.text !== null && 
         typeof msg.text === 'string'
       ) as Message[];
       setMessages(validMessages);
       
       const autoReplyTimeout = setTimeout(() => {
-        if (currentUserType === 'customer' && conversation?.id && messaging) {
+        if (isMounted && currentUserType === 'customer' && conversation?.id && messaging) {
           messaging.sendMessage(
             conversation.id,
             'Thanks for your message! I\'ll get back to you soon.',
@@ -176,14 +180,21 @@ export default function ChatScreen() {
             msg && 
             typeof msg === 'object' && 
             msg.id && 
-            msg.text && 
+            msg.text !== undefined &&
+            msg.text !== null && 
             typeof msg.text === 'string'
           ) as Message[];
-          setMessages(validRefreshedMessages);
+          
+          if (isMounted) {
+            setMessages(validRefreshedMessages);
+          }
         }
       }, 1000);
       
-      return () => clearTimeout(autoReplyTimeout);
+      return () => {
+        isMounted = false;
+        clearTimeout(autoReplyTimeout);
+      };
     }
   };
 
