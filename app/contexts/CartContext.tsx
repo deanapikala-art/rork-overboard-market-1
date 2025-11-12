@@ -111,15 +111,13 @@ const [CartProvider, useCart] = createContextHook<CartContextValue>(() => {
     } finally {
       if (isMounted) setIsLoaded(true);
     }
-    return () => { isMounted = false; };
   }, [isAuthenticated, user]);
 
   useEffect(() => {
-    const cleanup = loadCart();
+    let isMounted = true;
+    loadCart();
     return () => {
-      if (cleanup && typeof cleanup === 'function') {
-        cleanup();
-      }
+      isMounted = false;
     };
   }, [loadCart]);
 
