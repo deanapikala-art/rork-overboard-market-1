@@ -44,7 +44,23 @@ export const [MessagingContext, useMessaging] = createContextHook(() => {
           const data = JSON.parse(stored);
           if (data && typeof data === 'object') {
             setConversations(Array.isArray(data.conversations) ? data.conversations : []);
-            setMessages(typeof data.messages === 'object' && data.messages !== null ? data.messages : {});
+            
+            const validMessages: Record<string, Message[]> = {};
+            if (typeof data.messages === 'object' && data.messages !== null) {
+              Object.keys(data.messages).forEach(convId => {
+                const msgs = data.messages[convId];
+                if (Array.isArray(msgs)) {
+                  validMessages[convId] = msgs.filter((msg: any) => 
+                    msg && 
+                    typeof msg === 'object' && 
+                    msg.id && 
+                    msg.text && 
+                    typeof msg.text === 'string'
+                  );
+                }
+              });
+            }
+            setMessages(validMessages);
           } else {
             console.warn('[Messaging] Invalid messaging data format, resetting');
             await AsyncStorage.removeItem(STORAGE_KEY);

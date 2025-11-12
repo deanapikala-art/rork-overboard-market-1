@@ -43,7 +43,8 @@ export default function ChatScreen() {
   const currentUserType = isVendorView ? 'vendor' : 'customer';
 
   const [conversation, setConversation] = useState<ReturnType<typeof messaging.getOrCreateConversation> | null>(null);
-  const messages = conversation && messaging ? messaging.getConversationMessages(conversation.id) : [];
+  const rawMessages = conversation && messaging ? messaging.getConversationMessages(conversation.id) : [];
+  const messages = rawMessages.filter(msg => msg && msg.id && msg.text);
 
   useEffect(() => {
     if (!messaging) return;
@@ -259,7 +260,7 @@ export default function ChatScreen() {
               ref={flatListRef}
               data={messages}
               renderItem={renderMessage}
-              keyExtractor={item => item.id}
+              keyExtractor={(item, index) => item?.id || `msg-${index}`}
               contentContainerStyle={styles.messagesList}
               showsVerticalScrollIndicator={false}
               onContentSizeChange={() =>
