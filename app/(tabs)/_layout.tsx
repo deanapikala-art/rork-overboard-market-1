@@ -3,8 +3,8 @@ import { Home, ShoppingBag, Store, ShoppingCart, Users, Calendar } from 'lucide-
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-import Colors from '@/app/constants/colors';
-import { useCart } from '@/app/contexts/CartContext';
+import Colors from '@/constants/colors';
+import { useCart } from '@/contexts/CartContext';
 
 export default function TabLayout() {
   const { getCartItemCount } = useCart();

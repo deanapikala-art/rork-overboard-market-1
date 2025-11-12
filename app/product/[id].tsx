@@ -9,8 +9,8 @@ import * as DocumentPicker from 'expo-document-picker';
 import Colors from '@/constants/colors';
 import { products } from '@/mocks/products';
 import { vendors } from '@/mocks/vendors';
-import { useCart, CustomizationValue } from '@/app/contexts/CartContext';
-import { ShippingDisplay } from '@/app/components/ShippingDisplay';
+import { useCart, CustomizationValue } from '@/contexts/CartContext';
+import { ShippingDisplay } from '@/components/ShippingDisplay';
 
 import { productOptions } from '@/mocks/productOptions';
 

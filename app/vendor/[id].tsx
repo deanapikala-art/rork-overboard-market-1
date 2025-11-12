@@ -6,14 +6,14 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Anima
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import ArrangePickupModal from '@/app/components/ArrangePickupModal';
-import VendorShoutoutsSection from '@/app/components/VendorShoutoutsSection';
-import { useFavorites } from '@/app/contexts/FavoritesContext';
+import ArrangePickupModal from '@/components/ArrangePickupModal';
+import VendorShoutoutsSection from '@/components/VendorShoutoutsSection';
+import { useFavorites } from '@/contexts/FavoritesContext';
 import Colors from '@/constants/colors';
 import { products } from '@/mocks/products';
 import { vendors } from '@/mocks/vendors';
 import { logAnalyticsEvent } from '@/mocks/analytics';
-import { ShippingDisplay } from '@/app/components/ShippingDisplay';
+import { ShippingDisplay } from '@/components/ShippingDisplay';
 
 const { width } = Dimensions.get('window');
 const numColumns = 3;

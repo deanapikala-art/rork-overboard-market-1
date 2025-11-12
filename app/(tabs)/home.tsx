@@ -19,8 +19,8 @@ import { events } from '@/mocks/events';
 import { featuredSections } from '@/constants/featuredSections';
 import { getFeaturedSpotlights } from '@/mocks/vendorSpotlights';
 import { vendors } from '@/mocks/vendors';
-import { useCustomerAuth } from '@/app/contexts/CustomerAuthContext';
-import HamburgerMenu from '@/app/components/HamburgerMenu';
+import { useCustomerAuth } from '@/contexts/CustomerAuthContext';
+import HamburgerMenu from '@/components/HamburgerMenu';
 import responsive from '@/constants/responsive';
 
 interface FeatureBanner {

@@ -6,16 +6,16 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking, Alert, T
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Colors from '@/constants/colors';
-import { useCart, VendorCartGroup } from '@/app/contexts/CartContext';
-import { useSavedForLater } from '@/app/contexts/SavedForLaterContext';
-import { useOrders } from '@/app/contexts/OrdersContext';
+import { useCart, VendorCartGroup } from '@/contexts/CartContext';
+import { useSavedForLater } from '@/contexts/SavedForLaterContext';
+import { useOrders } from '@/contexts/OrdersContext';
 import { vendors, Vendor } from '@/mocks/vendors';
-import { FeedbackButton } from '@/app/components/FeedbackButton';
-import { FeedbackModal } from '@/app/components/FeedbackModal';
-import { useCustomerAuth } from '@/app/contexts/CustomerAuthContext';
-import HamburgerMenu from '@/app/components/HamburgerMenu';
-import { CartShippingInfo } from '@/app/components/CartShippingInfo';
-import { getDistanceMiles, isPickupAvailable } from '@/app/utils/zipDistance';
+import { FeedbackButton } from '@/components/FeedbackButton';
+import { FeedbackModal } from '@/components/FeedbackModal';
+import { useCustomerAuth } from '@/contexts/CustomerAuthContext';
+import HamburgerMenu from '@/components/HamburgerMenu';
+import { CartShippingInfo } from '@/components/CartShippingInfo';
+import { getDistanceMiles, isPickupAvailable } from '@/utils/zipDistance';
 
 export default function CartScreen() {
   const insets = useSafeAreaInsets();
