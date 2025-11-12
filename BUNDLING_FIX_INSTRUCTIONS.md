@@ -16,7 +16,7 @@ The bundling errors are caused by **Metro bundler cache issues**, not incorrect 
 ### Step 1: Clear All Caches
 Run the cache clearing script:
 ```bash
-bash clear-metro-cache.sh
+bash clear-metro-cache.sh-
 ```
 
 Or manually run these commands:
