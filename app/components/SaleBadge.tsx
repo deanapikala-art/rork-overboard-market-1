@@ -157,6 +157,6 @@ const styles = StyleSheet.create({
   },
   regularPrice: {
     fontWeight: '700' as const,
-    color: Colors.dark.text,
+    color: Colors.light.text,
   },
 });
