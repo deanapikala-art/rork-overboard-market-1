@@ -14,10 +14,12 @@ export default function TabLayout() {
   let cartItemCount = 0;
   try {
     if (cart && cart.isLoaded && typeof cart.getCartItemCount === 'function') {
-      cartItemCount = cart.getCartItemCount();
+      const count = cart.getCartItemCount();
+      cartItemCount = typeof count === 'number' && !isNaN(count) ? count : 0;
     }
   } catch (error) {
-    console.warn('Error getting cart item count:', error);
+    console.warn('[TabLayout] Error getting cart item count:', error);
+    cartItemCount = 0;
   }
 
   const iconSizeValue = isTablet || isDesktop ? 26 : 24;

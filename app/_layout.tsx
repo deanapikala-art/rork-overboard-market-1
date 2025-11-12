@@ -41,6 +41,8 @@ LogBox.ignoreLogs([
   'Require cycle:',
   'No route named',
   'Layout children',
+  'Cannot read properties of undefined',
+  'Can\'t perform a React state update',
 ]);
 
 SplashScreen.preventAutoHideAsync();

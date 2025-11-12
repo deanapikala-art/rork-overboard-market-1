@@ -58,6 +58,8 @@ export const [TrustScoreContext, useTrustScore] = createContextHook(() => {
       return;
     }
 
+    let isMounted = true;
+    
     try {
       const { data, error } = await supabase
         .from('vendor_profiles')
@@ -67,7 +69,7 @@ export const [TrustScoreContext, useTrustScore] = createContextHook(() => {
 
       if (error) throw error;
 
-      if (data) {
+      if (data && isMounted) {
         setTrustData({
           trustScore: data.trust_score || 70,
           trustTier: data.trust_tier || 'New or Improving',
@@ -87,15 +89,30 @@ export const [TrustScoreContext, useTrustScore] = createContextHook(() => {
         });
       }
     } catch (error) {
+      if (!isMounted) return;
       console.error('Error fetching trust data:', error);
     } finally {
-      setLoading(false);
-      setRefreshing(false);
+      if (isMounted) {
+        setLoading(false);
+        setRefreshing(false);
+      }
     }
   }, [vendorProfile?.id]);
 
   useEffect(() => {
-    fetchTrustData();
+    let isMounted = true;
+    
+    const load = async () => {
+      if (isMounted) {
+        await fetchTrustData();
+      }
+    };
+    
+    load();
+    
+    return () => {
+      isMounted = false;
+    };
   }, [fetchTrustData]);
 
   const refresh = useCallback(async () => {

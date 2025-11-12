@@ -132,7 +132,7 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
     } finally {
       if (isMounted) setIsLoading(false);
     }
-    return () => { isMounted = false; };
+
   }, [isAuthenticated, user]);
 
   const loadVendorOrders = useCallback(async () => {
@@ -167,15 +167,22 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
     } finally {
       if (isMounted) setIsLoadingVendorOrders(false);
     }
-    return () => { isMounted = false; };
+
   }, [isAuthenticated, user]);
 
   useEffect(() => {
-    const cleanup = loadCustomerOrders();
-    return () => {
-      if (cleanup && typeof cleanup === 'function') {
-        cleanup();
+    let isMounted = true;
+    
+    const load = async () => {
+      if (isMounted) {
+        await loadCustomerOrders();
       }
+    };
+    
+    load();
+    
+    return () => {
+      isMounted = false;
     };
   }, [loadCustomerOrders]);
 
