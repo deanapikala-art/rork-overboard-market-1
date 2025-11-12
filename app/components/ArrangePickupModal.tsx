@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Modal, TouchableOpacity, ScrollView, Linking, P
 import { X, MapPin, Calendar, MessageCircle, Navigation } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { Vendor } from '@/mocks/vendors';
 import { useCart, CartItem } from '@/app/contexts/CartContext';
 
