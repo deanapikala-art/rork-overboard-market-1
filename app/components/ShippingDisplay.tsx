@@ -23,6 +23,8 @@ interface ShippingDisplayProps {
 }
 
 export function ShippingDisplay({ settings, location, variant = 'compact' }: ShippingDisplayProps) {
+  if (!settings) return null;
+
   const hasShipping = settings.flatPerItem || settings.flatPerOrder || settings.freeShippingOver;
 
   if (!hasShipping && !settings.allowLocalPickup) {
