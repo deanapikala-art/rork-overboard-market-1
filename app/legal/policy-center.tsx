@@ -12,7 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack, router, useLocalSearchParams } from 'expo-router';
 import { Shield, FileText, Users, ChevronDown, ChevronUp, CheckCircle, LogOut } from 'lucide-react-native';
 import Colors from '@/app/constants/colors';
-import { usePolicyAcknowledgment, PolicyType } from '@/contexts/PolicyAcknowledgmentContext';
+import { usePolicyAcknowledgment, PolicyType } from '@/app/contexts/PolicyAcknowledgmentContext';
 import { supabase } from '@/lib/supabase';
 
 type PolicyTab = 'privacy' | 'terms' | 'conduct' | 'safety';
