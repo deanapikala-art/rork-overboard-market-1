@@ -188,7 +188,8 @@ export default function ChatScreen() {
   };
 
   const renderMessage = ({ item }: { item: Message }) => {
-    if (!item || !item.text) {
+    if (!item || !item.text || typeof item.text !== 'string') {
+      console.warn('[Chat] Skipping invalid message:', item);
       return null;
     }
 

@@ -339,9 +339,16 @@ export default function EventBoothScreen() {
                       <Text style={styles.chatHeaderText}>Live Chat</Text>
                     </View>
                     <ScrollView style={styles.chatMessages} showsVerticalScrollIndicator={false}>
-                      {chatMessages.map((msg, index) => (
-                        msg?.text ? <Text key={index} style={styles.chatMessage}>{msg.text}</Text> : null
-                      ))}
+                      {chatMessages.map((msg, index) => {
+                        if (!msg || !msg.text || typeof msg.text !== 'string') {
+                          return null;
+                        }
+                        return (
+                          <Text key={`${msg.timestamp}-${index}`} style={styles.chatMessage}>
+                            {msg.text}
+                          </Text>
+                        );
+                      })}
                     </ScrollView>
                     <View style={styles.chatInputContainer}>
                       <TextInput

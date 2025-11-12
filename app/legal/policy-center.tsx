@@ -325,12 +325,15 @@ export default function PolicyCenterScreen() {
             {typeof section.content === 'string' ? (
               <Text style={styles.contentText}>{section.content}</Text>
             ) : (
-              section.content.map((item, index) => (
-                <View key={index} style={styles.subsection}>
-                  <Text style={styles.subsectionTitle}>{item?.subtitle || ''}</Text>
-                  <Text style={styles.contentText}>{item?.text || ''}</Text>
-                </View>
-              ))
+              section.content.map((item, index) => {
+                if (!item || typeof item !== 'object') return null;
+                return (
+                  <View key={index} style={styles.subsection}>
+                    <Text style={styles.subsectionTitle}>{item?.subtitle || ''}</Text>
+                    <Text style={styles.contentText}>{item?.text || ''}</Text>
+                  </View>
+                );
+              })
             )}
           </View>
         )}

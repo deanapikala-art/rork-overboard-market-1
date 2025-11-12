@@ -62,7 +62,8 @@ export default function TrustedVendorBadge({
 
   const tierData = getTierData();
 
-  if (!tierData || !tierData.text) {
+  if (!tierData || !tierData.text || typeof tierData.text !== 'string') {
+    console.warn('[TrustedVendorBadge] Invalid tierData:', tierData);
     return null;
   }
 
