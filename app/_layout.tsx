@@ -404,109 +404,109 @@ export default function RootLayout() {
 
   return (
     <ErrorBoundary>
-    <trpc.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <ErrorBoundary>
-          <AuthContext>
+      <trpc.Provider client={trpcClient} queryClient={queryClient}>
+        <QueryClientProvider client={queryClient}>
+          <GestureHandlerRootView style={{ flex: 1 }}>
             <ErrorBoundary>
-            <CustomerAuthProvider>
-              <ErrorBoundary>
-              <PolicyAcknowledgmentProvider>
-              <ErrorBoundary>
-              <CustomerNotificationsProvider>
+              <AuthContext>
                 <ErrorBoundary>
-                <TrustScoreContext>
-                  <ErrorBoundary>
-                  <VendorAuthProvider>
-                <ErrorBoundary>
-                <AdminAuthProvider>
-                  <ErrorBoundary>
-                  <ReportsProvider>
-                  <ErrorBoundary>
-                  <AdminStatsProvider>
+                  <CustomerAuthProvider>
                     <ErrorBoundary>
-                    <AdminControlsProvider>
-                      <ErrorBoundary>
-                      <AdminNotificationsProvider>
-                    <ErrorBoundary>
-                    <FavoritesProvider>
-                    <ErrorBoundary>
-                    <SavedForLaterProvider>
-                      <ErrorBoundary>
-                      <MessagingContext>
+                      <PolicyAcknowledgmentProvider>
                         <ErrorBoundary>
-                        <MessagingCenterProvider>
-                          <ErrorBoundary>
-                          <SafetyFiltersProvider>
-                          <ErrorBoundary>
-                          <AutoResponderProvider>
-                        <ErrorBoundary>
-                        <ShoutoutsProvider>
-                          <ErrorBoundary>
-                          <VendorLiveProvider>
+                          <CustomerNotificationsProvider>
                             <ErrorBoundary>
-                            <WorkshopsProvider>
-                              <ErrorBoundary>
-                              <VendorSalesProvider>
-                            <ErrorBoundary>
-                            <OrdersProvider>
-                              <ErrorBoundary>
-                              <CartProvider>
+                              <TrustScoreContext>
                                 <ErrorBoundary>
-                                  <FeedbackContext>
-                                    <RootLayoutNav />
-                                  </FeedbackContext>
+                                  <VendorAuthProvider>
+                                    <ErrorBoundary>
+                                      <AdminAuthProvider>
+                                        <ErrorBoundary>
+                                          <ReportsProvider>
+                                            <ErrorBoundary>
+                                              <AdminStatsProvider>
+                                                <ErrorBoundary>
+                                                  <AdminControlsProvider>
+                                                    <ErrorBoundary>
+                                                      <AdminNotificationsProvider>
+                                                        <ErrorBoundary>
+                                                          <FavoritesProvider>
+                                                            <ErrorBoundary>
+                                                              <SavedForLaterProvider>
+                                                                <ErrorBoundary>
+                                                                  <MessagingContext>
+                                                                    <ErrorBoundary>
+                                                                      <MessagingCenterProvider>
+                                                                        <ErrorBoundary>
+                                                                          <SafetyFiltersProvider>
+                                                                            <ErrorBoundary>
+                                                                              <AutoResponderProvider>
+                                                                                <ErrorBoundary>
+                                                                                  <ShoutoutsProvider>
+                                                                                    <ErrorBoundary>
+                                                                                      <VendorLiveProvider>
+                                                                                        <ErrorBoundary>
+                                                                                          <WorkshopsProvider>
+                                                                                            <ErrorBoundary>
+                                                                                              <VendorSalesProvider>
+                                                                                                <ErrorBoundary>
+                                                                                                  <OrdersProvider>
+                                                                                                    <ErrorBoundary>
+                                                                                                      <CartProvider>
+                                                                                                        <ErrorBoundary>
+                                                                                                          <FeedbackContext>
+                                                                                                            <RootLayoutNav />
+                                                                                                          </FeedbackContext>
+                                                                                                        </ErrorBoundary>
+                                                                                                      </CartProvider>
+                                                                                                    </ErrorBoundary>
+                                                                                                  </OrdersProvider>
+                                                                                                </ErrorBoundary>
+                                                                                              </VendorSalesProvider>
+                                                                                            </ErrorBoundary>
+                                                                                          </WorkshopsProvider>
+                                                                                        </ErrorBoundary>
+                                                                                      </VendorLiveProvider>
+                                                                                    </ErrorBoundary>
+                                                                                  </ShoutoutsProvider>
+                                                                                </ErrorBoundary>
+                                                                              </AutoResponderProvider>
+                                                                            </ErrorBoundary>
+                                                                          </SafetyFiltersProvider>
+                                                                        </ErrorBoundary>
+                                                                      </MessagingCenterProvider>
+                                                                    </ErrorBoundary>
+                                                                  </MessagingContext>
+                                                                </ErrorBoundary>
+                                                              </SavedForLaterProvider>
+                                                            </ErrorBoundary>
+                                                          </FavoritesProvider>
+                                                        </ErrorBoundary>
+                                                      </AdminNotificationsProvider>
+                                                    </ErrorBoundary>
+                                                  </AdminControlsProvider>
+                                                </ErrorBoundary>
+                                              </AdminStatsProvider>
+                                            </ErrorBoundary>
+                                          </ReportsProvider>
+                                        </ErrorBoundary>
+                                      </AdminAuthProvider>
+                                    </ErrorBoundary>
+                                  </VendorAuthProvider>
                                 </ErrorBoundary>
-                              </CartProvider>
+                              </TrustScoreContext>
                             </ErrorBoundary>
-                          </OrdersProvider>
+                          </CustomerNotificationsProvider>
                         </ErrorBoundary>
-                      </VendorSalesProvider>
+                      </PolicyAcknowledgmentProvider>
                     </ErrorBoundary>
-                  </WorkshopsProvider>
+                  </CustomerAuthProvider>
                 </ErrorBoundary>
-              </VendorLiveProvider>
+              </AuthContext>
             </ErrorBoundary>
-          </ShoutoutsProvider>
-        </ErrorBoundary>
-      </AutoResponderProvider>
-    </ErrorBoundary>
-  </SafetyFiltersProvider>
-</ErrorBoundary>
-        </MessagingCenterProvider>
-      </ErrorBoundary>
-    </MessagingContext>
-  </ErrorBoundary>
-                    </SavedForLaterProvider>
-                  </ErrorBoundary>
-                </FavoritesProvider>
-              </ErrorBoundary>
-            </AdminNotificationsProvider>
-          </ErrorBoundary>
-        </AdminControlsProvider>
-      </ErrorBoundary>
-    </AdminStatsProvider>
-  </ErrorBoundary>
-                  </ReportsProvider>
-                </ErrorBoundary>
-              </AdminAuthProvider>
-            </ErrorBoundary>
-          </VendorAuthProvider>
-        </ErrorBoundary>
-      </TrustScoreContext>
-    </ErrorBoundary>
-              </CustomerNotificationsProvider>
-            </ErrorBoundary>
-          </PolicyAcknowledgmentProvider>
-        </ErrorBoundary>
-      </CustomerAuthProvider>
-    </ErrorBoundary>
-  </AuthContext>
-</ErrorBoundary>
-        </GestureHandlerRootView>
-      </QueryClientProvider>
-    </trpc.Provider>
+          </GestureHandlerRootView>
+        </QueryClientProvider>
+      </trpc.Provider>
     </ErrorBoundary>
   );
 }
