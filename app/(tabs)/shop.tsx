@@ -5,18 +5,18 @@ import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, Linking, Animated, NativeScrollEvent, NativeSyntheticEvent, Modal } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { categories, products } from '@/mocks/products';
-import { SERVICE_CATEGORIES } from '@/constants/serviceCategories';
+import { SERVICE_CATEGORIES } from '@/app/constants/serviceCategories';
 import { vendors } from '@/mocks/vendors';
-import { LocalShoppingToolbar } from '@/components/LocalShoppingToolbar';
-import { geocodeZipCode, haversineDistance } from '@/utils/geolocation';
+import { LocalShoppingToolbar } from '@/app/components/LocalShoppingToolbar';
+import { geocodeZipCode, haversineDistance } from '@/app/utils/geolocation';
 import { logAnalyticsEvent } from '@/mocks/analytics';
-import { TopNavigation } from '@/components/TopNavigation';
+import { TopNavigation } from '@/app/components/TopNavigation';
 
-import { useCustomerAuth } from '@/contexts/CustomerAuthContext';
-import HamburgerMenu from '@/components/HamburgerMenu';
-import { useResponsive } from '@/hooks/useResponsive';
+import { useCustomerAuth } from '@/app/contexts/CustomerAuthContext';
+import HamburgerMenu from '@/app/components/HamburgerMenu';
+import { useResponsive } from '@/app/hooks/useResponsive';
 
 const PRODUCT_CATEGORIES = categories.filter(c => c !== 'All');
 

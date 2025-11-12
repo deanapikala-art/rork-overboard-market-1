@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Dimensions } from 'react-native';
-import responsive from '@/constants/responsive';
+import responsive from '@/app/constants/responsive';
 
 export const useResponsive = () => {
   const [dimensions, setDimensions] = useState({

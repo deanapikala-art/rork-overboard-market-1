@@ -4,10 +4,10 @@ import { Calendar, Store, ChevronDown, ChevronUp, Radio, CalendarPlus } from 'lu
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'react-native';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { events, Event } from '@/mocks/events';
-import { TopNavigation } from '@/components/TopNavigation';
-import HamburgerMenu from '@/components/HamburgerMenu';
+import { TopNavigation } from '@/app/components/TopNavigation';
+import HamburgerMenu from '@/app/components/HamburgerMenu';
 
 export default function EventsScreen() {
   const router = useRouter();

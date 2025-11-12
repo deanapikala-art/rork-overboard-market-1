@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 
 export function TopNavigation() {
   const insets = useSafeAreaInsets();
