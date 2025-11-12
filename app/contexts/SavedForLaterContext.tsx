@@ -2,8 +2,8 @@ import createContextHook from '@nkzw/create-context-hook';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/lib/supabase';
-import { useCustomerAuth } from './CustomerAuthContext';
-import { CartItem } from './CartContext';
+import { useCustomerAuth } from '@/app/contexts/CustomerAuthContext';
+import { CartItem } from '@/app/contexts/CartContext';
 
 export interface SavedForLaterItem extends CartItem {
   savedAt: number;

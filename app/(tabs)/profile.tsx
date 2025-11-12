@@ -2,7 +2,7 @@ import { useCustomerAuth } from '@/app/contexts/CustomerAuthContext';
 import { useFavorites } from '@/app/contexts/FavoritesContext';
 import { useSavedForLater } from '@/app/contexts/SavedForLaterContext';
 import { useCart } from '@/app/contexts/CartContext';
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import HamburgerMenu from '@/app/components/HamburgerMenu';
 import { router, Href } from 'expo-router';
 import { User, Mail, Phone, Bell, Heart, LogOut, LogIn, Edit2, Save, X, Bookmark, ShoppingCart, Trash2, HelpCircle, Package, Settings } from 'lucide-react-native';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import createContextHook from '@nkzw/create-context-hook';
 import { supabase } from '@/lib/supabase';
-import { useVendorAuth } from './VendorAuthContext';
+import { useVendorAuth } from '@/app/contexts/VendorAuthContext';
 
 export interface RecoveryGoal {
   id: string;

@@ -1,8 +1,8 @@
 import createContextHook from '@nkzw/create-context-hook';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/lib/supabase';
-import { useCustomerAuth } from './CustomerAuthContext';
-import { CartItem } from './CartContext';
+import { useCustomerAuth } from '@/app/contexts/CustomerAuthContext';
+import { CartItem } from '@/app/contexts/CartContext';
 import { generateTrackingUrl } from '@/app/utils/deliveryTracking';
 
 export interface OrderItem {

@@ -2,7 +2,7 @@ import createContextHook from '@nkzw/create-context-hook';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/lib/supabase';
-import { useCustomerAuth } from './CustomerAuthContext';
+import { useCustomerAuth } from '@/app/contexts/CustomerAuthContext';
 import { Product } from '@/mocks/products';
 import { Vendor } from '@/mocks/vendors';
 import { getDistanceMiles, isPickupAvailable } from '@/app/utils/zipDistance';

@@ -1,6 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import createContextHook from '@nkzw/create-context-hook';
-import { useCustomerAuth } from './CustomerAuthContext';
+import { useCustomerAuth } from '@/app/contexts/CustomerAuthContext';
 import { useState, useEffect, useCallback } from 'react';
 import { RealtimeChannel } from '@supabase/supabase-js';
 

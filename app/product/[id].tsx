@@ -6,11 +6,11 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Linki
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as DocumentPicker from 'expo-document-picker';
 
-import Colors from '@/constants/colors';
+import Colors from '@/app/constants/colors';
 import { products } from '@/mocks/products';
 import { vendors } from '@/mocks/vendors';
-import { useCart, CustomizationValue } from '@/contexts/CartContext';
-import { ShippingDisplay } from '@/components/ShippingDisplay';
+import { useCart, CustomizationValue } from '@/app/contexts/CartContext';
+import { ShippingDisplay } from '@/app/components/ShippingDisplay';
 
 import { productOptions } from '@/mocks/productOptions';
 
