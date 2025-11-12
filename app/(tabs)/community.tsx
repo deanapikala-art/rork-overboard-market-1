@@ -1,4 +1,4 @@
-import { router, Stack } from 'expo-router';
+import { router } from 'expo-router';
 import { MapPin, Sparkles, Calendar } from 'lucide-react-native';
 import React from 'react';
 import {
@@ -29,7 +29,6 @@ export default function CommunityScreen() {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ headerShown: false }} />
       <LinearGradient
         colors={[Colors.nautical.oceanDeep, Colors.nautical.teal, Colors.nautical.sandLight]}
         style={styles.gradient}

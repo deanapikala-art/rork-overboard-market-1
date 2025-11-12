@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { Stack, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { Calendar, Store, ChevronDown, ChevronUp, Radio, CalendarPlus } from 'lucide-react-native';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'react-native';
@@ -135,8 +135,6 @@ export default function EventsScreen() {
   );
 
   return (
-    <>
-      <Stack.Screen options={{ headerShown: false }} />
       <View style={styles.container}>
         <HamburgerMenu />
         <TopNavigation />
@@ -207,7 +205,6 @@ export default function EventsScreen() {
           )}
         </ScrollView>
       </View>
-    </>
   );
 }
 

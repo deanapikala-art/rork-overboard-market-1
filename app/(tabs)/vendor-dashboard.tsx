@@ -1,4 +1,4 @@
-import { router, Stack } from 'expo-router';
+import { router } from 'expo-router';
 import {
   Camera,
   Edit,
@@ -1689,8 +1689,6 @@ export default function VendorDashboard() {
   };
 
   return (
-    <>
-      <Stack.Screen options={{ headerShown: false }} />
       <View style={styles.container}>
         <HamburgerMenu />
         <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
@@ -1792,7 +1790,6 @@ export default function VendorDashboard() {
           </TouchableOpacity>
         </View>
       </View>
-    </>
   );
 }
 
