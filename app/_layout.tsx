@@ -39,6 +39,8 @@ LogBox.ignoreLogs([
   'VirtualizedLists should never be nested',
   'Sending \`onAnimatedValueUpdate\` with no listeners registered',
   'Require cycle:',
+  'No route named',
+  'Layout children',
 ]);
 
 SplashScreen.preventAutoHideAsync();
