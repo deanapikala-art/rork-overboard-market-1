@@ -13,9 +13,9 @@ The following components are imported but **do not exist**:
 
 | File | Missing Component | Import Path |
 |------|------------------|-------------|
-| `app/admin-policy-management.tsx` | AdminPolicyEditor | `@/components/AdminPolicyEditor` |
-| `app/admin-policy-management.tsx` | AdminAcknowledgmentStats | `@/components/AdminAcknowledgmentStats` |
-| `app/components/SaleBadge.tsx` | SaleBadge | `@/components/SaleBadge` |
+| `app/admin-policy-management.tsx` | AdminPolicyEditor | `@/app/components/AdminPolicyEditor` |
+| `app/admin-policy-management.tsx` | AdminAcknowledgmentStats | `@/app/components/AdminAcknowledgmentStats` |
+| `app/components/SaleBadge.tsx` | SaleBadge | `@/app/components/SaleBadge` |
 
 **Impact:** App will **fail to bundle** - these files are imported but missing.
 

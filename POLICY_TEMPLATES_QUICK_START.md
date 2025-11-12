@@ -34,7 +34,7 @@ Add the `GlobalPolicyBanner` component to your app layout:
 **File: `app/_layout.tsx`**
 ```typescript
 import { PolicyAcknowledgmentProvider } from '@app/contexts/PolicyAcknowledgmentContext';
-import { GlobalPolicyBanner } from '@/components/PolicyBanner';
+import { GlobalPolicyBanner } from '@/app/components/PolicyBanner';
 
 export default function RootLayout() {
   return (
@@ -76,7 +76,7 @@ If you want more control, use components separately:
 
 **Admin Dashboard:**
 ```typescript
-import { AdminAcknowledgmentStats } from '@/components/AdminAcknowledgmentStats';
+import { AdminAcknowledgmentStats } from '@/app/components/AdminAcknowledgmentStats';
 
 export default function AdminDashboard() {
   return (
@@ -90,7 +90,7 @@ export default function AdminDashboard() {
 
 **Policy Editor:**
 ```typescript
-import { AdminPolicyEditor } from '@/components/AdminPolicyEditor';
+import { AdminPolicyEditor } from '@/app/components/AdminPolicyEditor';
 
 export default function PolicyEditorScreen() {
   return (
