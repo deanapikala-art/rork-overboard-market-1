@@ -111,6 +111,12 @@ export const [PolicyAcknowledgmentProvider, usePolicyAcknowledgment] = createCon
         return;
       }
 
+      if (!data) {
+        console.log('[PolicyAcknowledgment] No policies found');
+        setCurrentPolicies([]);
+        return;
+      }
+
       const policies = (data || []).map((policy: any) => ({
         ...policy,
         version: policy?.version ?? 1,
@@ -187,15 +193,26 @@ export const [PolicyAcknowledgmentProvider, usePolicyAcknowledgment] = createCon
   }, [userId]);
 
   useEffect(() => {
+    let isMounted = true;
+    
     const loadData = async () => {
-      setIsLoading(true);
-      await loadCurrentPolicies();
-      await loadUserAcknowledgments();
-      await loadPendingNotifications();
-      setIsLoading(false);
+      if (isMounted) setIsLoading(true);
+      try {
+        await loadCurrentPolicies();
+        await loadUserAcknowledgments();
+        await loadPendingNotifications();
+      } catch (error) {
+        console.error('[PolicyAcknowledgment] Error loading data:', error);
+      } finally {
+        if (isMounted) setIsLoading(false);
+      }
     };
 
     loadData();
+    
+    return () => {
+      isMounted = false;
+    };
   }, [loadCurrentPolicies, loadUserAcknowledgments, loadPendingNotifications]);
 
   useEffect(() => {

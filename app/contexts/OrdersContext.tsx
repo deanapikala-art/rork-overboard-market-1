@@ -103,6 +103,7 @@ const [OrdersProvider, useOrders] = createContextHook<OrdersContextValue>(() => 
     if (!isAuthenticated || !user?.id) {
       console.log('[Orders] Not authenticated, skipping customer orders load');
       setCustomerOrders([]);
+      setIsLoading(false);
       return;
     }
 

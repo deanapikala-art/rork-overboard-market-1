@@ -68,7 +68,9 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('[ErrorBoundary] Caught error:', error);
-    console.error('[ErrorBoundary] Error info:', errorInfo);
+    console.error('[ErrorBoundary] Component stack:', errorInfo.componentStack);
+    console.error('[ErrorBoundary] Error message:', error.message);
+    console.error('[ErrorBoundary] Error stack:', error.stack);
   }
 
   render() {
@@ -79,6 +81,9 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
             <Text style={errorBoundaryStyles.title}>Oops! Something went wrong</Text>
             <Text style={errorBoundaryStyles.message}>
               {this.state.error?.message || 'An unexpected error occurred'}
+            </Text>
+            <Text style={errorBoundaryStyles.errorDetails}>
+              Check console for more details
             </Text>
             <TouchableOpacity
               style={errorBoundaryStyles.button}
@@ -118,8 +123,14 @@ const errorBoundaryStyles = StyleSheet.create({
     fontSize: 16,
     color: '#6A6F73',
     textAlign: 'center',
-    marginBottom: 24,
+    marginBottom: 12,
     lineHeight: 24,
+  },
+  errorDetails: {
+    fontSize: 12,
+    color: '#9CA3AF',
+    textAlign: 'center',
+    marginBottom: 24,
   },
   button: {
     backgroundColor: '#EE6E56',
@@ -396,55 +407,103 @@ export default function RootLayout() {
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         <GestureHandlerRootView style={{ flex: 1 }}>
+          <ErrorBoundary>
           <AuthContext>
+            <ErrorBoundary>
             <CustomerAuthProvider>
+              <ErrorBoundary>
               <PolicyAcknowledgmentProvider>
+              <ErrorBoundary>
               <CustomerNotificationsProvider>
+                <ErrorBoundary>
                 <TrustScoreContext>
+                  <ErrorBoundary>
                   <VendorAuthProvider>
+                <ErrorBoundary>
                 <AdminAuthProvider>
+                  <ErrorBoundary>
                   <ReportsProvider>
+                  <ErrorBoundary>
                   <AdminStatsProvider>
+                    <ErrorBoundary>
                     <AdminControlsProvider>
+                      <ErrorBoundary>
                       <AdminNotificationsProvider>
+                    <ErrorBoundary>
                     <FavoritesProvider>
+                    <ErrorBoundary>
                     <SavedForLaterProvider>
+                      <ErrorBoundary>
                       <MessagingContext>
+                        <ErrorBoundary>
                         <MessagingCenterProvider>
+                          <ErrorBoundary>
                           <SafetyFiltersProvider>
+                          <ErrorBoundary>
                           <AutoResponderProvider>
+                        <ErrorBoundary>
                         <ShoutoutsProvider>
+                          <ErrorBoundary>
                           <VendorLiveProvider>
+                            <ErrorBoundary>
                             <WorkshopsProvider>
+                              <ErrorBoundary>
                               <VendorSalesProvider>
+                            <ErrorBoundary>
                             <OrdersProvider>
+                              <ErrorBoundary>
                               <CartProvider>
+                                <ErrorBoundary>
                                 <FeedbackContext>
                                   <RootLayoutNav />
                                 </FeedbackContext>
+                                </ErrorBoundary>
                               </CartProvider>
+                              </ErrorBoundary>
                             </OrdersProvider>
+                            </ErrorBoundary>
                               </VendorSalesProvider>
+                              </ErrorBoundary>
                             </WorkshopsProvider>
+                            </ErrorBoundary>
                           </VendorLiveProvider>
+                          </ErrorBoundary>
                         </ShoutoutsProvider>
+                        </ErrorBoundary>
                           </AutoResponderProvider>
+                          </ErrorBoundary>
                           </SafetyFiltersProvider>
+                          </ErrorBoundary>
                         </MessagingCenterProvider>
+                        </ErrorBoundary>
                       </MessagingContext>
+                      </ErrorBoundary>
                     </SavedForLaterProvider>
+                    </ErrorBoundary>
                     </FavoritesProvider>
+                    </ErrorBoundary>
                       </AdminNotificationsProvider>
+                      </ErrorBoundary>
                     </AdminControlsProvider>
+                    </ErrorBoundary>
                   </AdminStatsProvider>
+                  </ErrorBoundary>
                   </ReportsProvider>
+                  </ErrorBoundary>
                 </AdminAuthProvider>
+                </ErrorBoundary>
                   </VendorAuthProvider>
+                  </ErrorBoundary>
                 </TrustScoreContext>
+                </ErrorBoundary>
               </CustomerNotificationsProvider>
+              </ErrorBoundary>
               </PolicyAcknowledgmentProvider>
+              </ErrorBoundary>
             </CustomerAuthProvider>
+            </ErrorBoundary>
           </AuthContext>
+          </ErrorBoundary>
         </GestureHandlerRootView>
       </QueryClientProvider>
     </trpc.Provider>
