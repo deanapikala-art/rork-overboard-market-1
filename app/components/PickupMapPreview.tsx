@@ -88,6 +88,8 @@ export function PickupMapPreview({
   );
 }
 
+export default PickupMapPreview;
+
 const styles = StyleSheet.create({
   compactContainer: {
     backgroundColor: Colors.nautical.sandLight,

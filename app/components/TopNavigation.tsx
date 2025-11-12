@@ -12,6 +12,8 @@ export function TopNavigation() {
   );
 }
 
+export default TopNavigation;
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.light.card,

@@ -125,6 +125,8 @@ export function PriceWithSale({ originalPriceCents, sale, size = 'medium' }: Pri
   );
 }
 
+export default SaleBadge;
+
 const styles = StyleSheet.create({
   badge: {
     flexDirection: 'row',

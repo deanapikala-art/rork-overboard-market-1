@@ -97,3 +97,7 @@ export function getFeaturedSectionById(id: string): FeaturedSection | undefined 
 export function getActiveFeaturedSections(): FeaturedSection[] {
   return featuredSections;
 }
+
+export default function FeaturedSectionsPage() {
+  return null;
+}

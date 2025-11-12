@@ -115,6 +115,8 @@ export function GlobalPolicyBanner() {
   );
 }
 
+export default PolicyBanner;
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',

@@ -124,6 +124,8 @@ export function VendorTypeFilter({
   );
 }
 
+export default VendorTypeFilter;
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.white,
